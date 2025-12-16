@@ -1,87 +1,170 @@
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>International Teleworking Job Search - Bitpin</title>
+<title>International Teleworking Job Search</title>
 <style>
-body{font-family:sans-serif;margin:0;padding:0;background:linear-gradient(135deg,#0d6efd,#6f42c1);color:#fff;min-height:100vh}
-header{padding:20px;text-align:center;background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(255,255,255,0.2);border-radius:0 0 20px 20px}
-main{padding:15px;max-width:700px;margin:auto}
-.card{background:rgba(255,255,255,0.1);border-radius:12px;padding:15px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,.2)}
-.btn{display:block;width:100%;padding:14px;border:none;border-radius:10px;background:#198754;color:#fff;font-size:16px;text-align:center;margin-top:10px;cursor:pointer}
-.muted{color:#ddd;font-size:14px}
-a{color:#fff;text-decoration:underline}
-footer{text-align:center;color:#ddd;font-size:13px;padding:15px}
-ul{padding-left:20px}
-.warning{background:#ff4d4d;color:#fff;padding:12px;border-radius:10px;margin-bottom:15px;font-weight:bold}
-input{width:100%;padding:10px;border-radius:8px;border:none;margin-top:5px;margin-bottom:10px}
+:root{
+  --blue-dark:#0a2540;
+  --blue:#0d6efd;
+  --blue-light:#e7f1ff;
+  --white:#ffffff;
+  --gray:#f4f6f8;
+}
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{
+  margin:0;
+  background:linear-gradient(180deg,var(--blue-dark),#081b2f);
+  color:var(--white);
+}
+header{
+  padding:30px 15px;
+  text-align:center;
+}
+header h1{
+  margin:0;
+  font-size:1.6rem;
+}
+header p{
+  margin-top:10px;
+  color:#cfe2ff;
+  font-size:0.95rem;
+}
+.container{
+  background:var(--gray);
+  color:#000;
+  border-radius:20px 20px 0 0;
+  padding:20px;
+}
+.section{
+  background:var(--white);
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+.section h2{
+  margin-top:0;
+  color:var(--blue);
+  font-size:1.1rem;
+}
+ul{
+  padding-left:18px;
+}
+ul li{
+  margin-bottom:8px;
+  font-size:0.9rem;
+}
+.badge{
+  display:inline-block;
+  background:var(--blue-light);
+  color:var(--blue);
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:0.75rem;
+  margin:3px 3px 3px 0;
+}
+.btn{
+  display:block;
+  width:100%;
+  background:var(--blue);
+  color:var(--white);
+  border:none;
+  padding:14px;
+  border-radius:12px;
+  font-size:1rem;
+  font-weight:bold;
+  cursor:pointer;
+}
+.btn:active{
+  transform:scale(0.98);
+}
+.footer{
+  text-align:center;
+  font-size:0.75rem;
+  color:#cfe2ff;
+  padding:20px 10px;
+}
+.notice{
+  background:#fff3cd;
+  color:#664d03;
+  padding:10px;
+  border-radius:10px;
+  font-size:0.85rem;
+}
+.wallet{
+  background:#e7f1ff;
+  color:#084298;
+  padding:10px;
+  border-radius:10px;
+  font-size:0.85rem;
+  word-break:break-all;
+}
 </style>
 </head>
+
 <body>
+
 <header>
-<h1>International Teleworking Job Search</h1>
-<p>Start Remote Work Globally | Bitpin</p>
+  <h1>International Teleworking Job Search</h1>
+  <p>Global Remote Projects • Secure • Transparent</p>
 </header>
-<main>
-<div class="warning">
-⚠️ Do NOT share your phone number, address, or personal email anywhere. Violations will result in profile or project deletion.
+
+<div class="container">
+
+  <div class="section">
+    <h2>🔵 Available Remote Work Fields</h2>
+    <span class="badge">Translation</span>
+    <span class="badge">Scientific Articles</span>
+    <span class="badge">Cultural & Social</span>
+    <span class="badge">Economic</span>
+    <span class="badge">Civil & Construction</span>
+    <span class="badge">AI & Robotics</span>
+    <span class="badge">Electronics</span>
+    <span class="badge">Computer & IT</span>
+  </div>
+
+  <div class="section">
+    <h2>💰 Registration Fee</h2>
+    <p>Job seekers registration fee:</p>
+    <strong>2 USDT (TRC20)</strong>
+    <div class="wallet">
+      USDT TRC20 Wallet:<br>
+      aTUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>⚖ Platform Rules</h2>
+    <ul>
+      <li>Employer must pay before project starts</li>
+      <li>10% commission for platform</li>
+      <li>Only remote (teleworking) projects allowed</li>
+      <li>Any phone number, address, or email sharing leads to removal</li>
+      <li>Withdrawal or cancellation leads to penalty</li>
+      <li>Work must be delivered on the agreed date</li>
+      <li>Reminder will be sent 1 day before deadline</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>🛡 Legal & Security Notice</h2>
+    <div class="notice">
+      This platform does not collect phone numbers, emails, or physical addresses.
+      All payments are handled via USDT (TRC20) for international transparency.
+    </div>
+  </div>
+
+  <button class="btn">Register After Payment</button>
+
 </div>
 
-<div class="card">
-<h2>Register as Worker</h2>
-<p>Enter your email to receive a confirmation alert:</p>
-<input type="email" id="workerEmail" placeholder="Enter your email">
-<button class="btn" onclick="sendEmailConfirmation()">Send Confirmation</button>
-<p class="muted">After confirming, proceed to pay 2 USDT TRC20 to activate your profile.</p>
+<div class="footer">
+  © 2025 International Teleworking Job Search<br>
+  Global Remote Work Platform
 </div>
-
-<div class="card">
-<h2>Post a Project (Employer)</h2>
-<p>Pay project funds in advance via TRC20 Escrow. Worker starts after approval.</p>
-<p><strong>TRC20 Wallet Address:</strong><br> TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq</p>
-<p><strong>Start Date:</strong> <input type="date" id="startDate"></p>
-<p><strong>End Date:</strong> <input type="date" id="endDate"></p>
-<button class="btn" onclick="postProject()">Pay & Post Project</button>
-<p class="muted">All funds secured in Escrow. One day before deadline, worker will be reminded. Withdrawal penalties apply.</p>
-</div>
-
-<div class="card">
-<h2>Project Categories</h2>
-<ul>
-<li>AI & Machine Learning</li>
-<li>Programming & Computer Science</li>
-<li>Robotics (Simulation Only)</li>
-<li>Electronics (Design & Simulation)</li>
-<li>Translation (Scientific, Cultural, Social, Economic)</li>
-<li>Articles & Research (Social, Cultural, Economic, Service-related)</li>
-</ul>
-</div>
-
-<div class="card">
-<h2>Privacy & Security</h2>
-<p class="muted">Do not share phone numbers, addresses, or personal emails. All communications occur inside the platform. Violations will result in profile or project removal.</p>
-</div>
-</main>
-<footer>© 2025 International Teleworking Job Search | Bitpin</footer>
-
-<script>
-// تابع ثبت‌نام با alert هشدار
-function sendEmailConfirmation() {
-    const email = document.getElementById('workerEmail').value;
-    if(!email){ alert('Please enter your email.'); return; }
-    alert(`Confirmation alert sent for: ${email}`);
-}
-
-// ثبت پروژه کارفرما
-function postProject() {
-    const startDate = document.getElementById("startDate").value;
-    const endDate = document.getElementById("endDate").value;
-    if (!startDate || !endDate) { alert("Please select start and end dates."); return; }
-    alert(`Project will be created from ${startDate} to ${endDate}. Payment to Escrow required.`);
-}
-</script>
 
 </body>
 </html>
