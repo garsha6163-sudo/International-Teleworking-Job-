@@ -4,59 +4,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Telework</title>
+<title>Global Telework Registration</title>
 <style>
 body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
-header { background:#4CAF50; color:#fff; padding:20px; text-align:center; position:relative; }
+header { background:#4CAF50; color:#fff; padding:20px; text-align:center; }
 header img { height:50px; animation:spin 10s linear infinite; }
 @keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
-nav { text-align:right; padding:10px 20px; }
-nav select { padding:5px; }
 main { padding:20px; text-align:center; }
-button { padding:10px 20px; margin:10px; font-size:16px; cursor:pointer; border:none; border-radius:5px; background:#4CAF50; color:white; }
-footer { text-align:center; padding:20px; background:#333; color:white; }
-input { padding:5px; margin:5px; width:200px; }
-form { display:inline-block; text-align:left; }
+form { display:inline-block; text-align:left; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+label { display:block; margin:10px 0 5px; }
+input, select, button { padding:8px; width:100%; margin-bottom:10px; }
+button { background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer; }
+footer { text-align:center; padding:20px; background:#333; color:white; margin-top:20px; }
 </style>
 </head>
 <body>
 
 <header>
 <img src="https://via.placeholder.com/50" alt="Logo">
-<h1 id="title">Welcome to Global Telework</h1>
+<h1 id="title">Global Telework Registration</h1>
 </header>
 
-<nav>
-<label for="language-switch">Language:</label>
-<select id="language-switch">
-  <option value="en">English</option>
-  <option value="fa">فارسی</option>
-  <option value="ar">العربية</option>
-  <option value="es">Español</option>
-  <option value="fr">Français</option>
-  <option value="ru">Русский</option>
-  <option value="zh">中文</option>
-</select>
-</nav>
-
 <main>
-<p id="description">Find international remote jobs easily.</p>
+<p id="description">Select your role and project, then register.</p>
 
-<h2>Register</h2>
-<form id="register-form" action="payment.html">
-<label>Username:<br> <input type="text" name="username" required></label><br>
-<label>Skills:<br> <input type="text" name="skills" required></label><br>
-<label>Country:<br> <input type="text" name="country"></label><br>
+<form id="registration-form">
+<label>Role:</label>
+<select id="role" required>
+  <option value="">-- Select Role --</option>
+  <option value="employer">Employer</option>
+  <option value="worker">Worker</option>
+</select>
+
+<label>Project:</label>
+<select id="project" required>
+  <option value="">-- Select Project --</option>
+  <option value="project1">Project 1: Website Development</option>
+  <option value="project2">Project 2: Mobile App</option>
+  <option value="project3">Project 3: Graphic Design</option>
+</select>
+
+<label>Username:</label>
+<input type="text" id="username" required>
+
+<label>Skills:</label>
+<input type="text" id="skills" required>
+
+<label>Country:</label>
+<input type="text" id="country">
+
+<p id="payment-info">Payment Amount: 0 USDT</p>
+
 <button type="submit">Proceed to Payment</button>
 </form>
-
-<h2>Payment</h2>
-<p>Pay 2 USDT to register. Work will start after payment confirmation.</p>
-<form id="payment-form" action="success.html">
-<label>Wallet Address:<br> <input type="text" value="TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq" readonly></label><br>
-<button type="submit">Confirm Payment</button>
-</form>
-
 </main>
 
 <footer>
@@ -64,22 +64,30 @@ form { display:inline-block; text-align:left; }
 </footer>
 
 <script>
-const texts = {
-en: { title:"Welcome to Global Telework", description:"Find international remote jobs easily.", register:"Proceed to Payment", payment:"Confirm Payment" },
-fa: { title:"خوش آمدید به کاریابی بین الملل دورکاری", description:"به راحتی مشاغل دورکاری بین المللی پیدا کنید.", register:"پرداخت", payment:"تایید پرداخت" },
-ar: { title:"مرحبا بكم في العمل عن بعد العالمي", description:"ابحث عن وظائف دولية عن بعد بسهولة.", register:"الدفع", payment:"تأكيد الدفع" },
-es: { title:"Bienvenido a Global Telework", description:"Encuentra trabajos remotos internacionales fácilmente.", register:"Pagar", payment:"Confirmar Pago" },
-fr: { title:"Bienvenue à Global Telework", description:"Trouvez facilement des emplois à distance internationaux.", register:"Payer", payment:"Confirmer le paiement" },
-ru: { title:"Добро пожаловать в Global Telework", description:"Легко находите международные удалённые работы.", register:"Оплатить", payment:"Подтвердить оплату" },
-zh: { title:"欢迎来到全球远程工作", description:"轻松找到国际远程工作机会。", register:"支付", payment:"确认支付" }
-};
+const roleSelect = document.getElementById('role');
+const paymentInfo = document.getElementById('payment-info');
+roleSelect.addEventListener('change', () => {
+    const role = roleSelect.value;
+    if(role === 'employer') paymentInfo.textContent = "Payment Amount: 1 USDT";
+    else if(role === 'worker') paymentInfo.textContent = "Payment Amount: 2 USDT";
+    else paymentInfo.textContent = "Payment Amount: 0 USDT";
+});
 
-document.getElementById('language-switch').addEventListener('change', function(){
-  const lang = this.value;
-  document.getElementById('title').textContent = texts[lang].title;
-  document.getElementById('description').textContent = texts[lang].description;
-  document.querySelector('#register-form button').textContent = texts[lang].register;
-  document.querySelector('#payment-form button').textContent = texts[lang].payment;
+document.getElementById('registration-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    // بعدا می‌توان اینجا اتصال به پرداخت USDT اضافه کرد
+    const role = roleSelect.value;
+    const project = document.getElementById('project').value;
+    const username = document.getElementById('username').value;
+    const skills = document.getElementById('skills').value;
+    const country = document.getElementById('country').value;
+
+    // ذخیره اطلاعات محلی یا ارسال به سرور
+    console.log({role, project, username, skills, country});
+    
+    alert(`Payment for ${role === 'employer' ? '1 USDT' : '2 USDT'} to proceed. After confirmation, join Telegram.`);
+    // هدایت به صفحه پرداخت یا ربات تلگرام
+    window.location.href = "https://t.me/GlobalTeleworkOfficial";
 });
 </script>
 
