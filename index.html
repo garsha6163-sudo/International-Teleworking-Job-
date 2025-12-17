@@ -1,184 +1,86 @@
+
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>International Teleworking Job Search</title>
+<title>Global Telework</title>
 <style>
-*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;margin:0;padding:0}
-body{background:#f4f6fb;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:20px}
-h1,h2{color:#111;text-align:center;margin-bottom:10px}
-.container{background:#fff;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.1);padding:20px;width:100%;max-width:500px;margin-bottom:20px}
-.button{background:#6366f1;color:#fff;padding:10px 15px;border:none;border-radius:8px;cursor:pointer;font-size:16px;margin-top:10px}
-input, select, textarea{width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
-input[readonly]{background:#f0f0f0;cursor:pointer}
-.card{background:#f9f9f9;padding:12px;margin:8px 0;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
-.locked{background:#fff3cd;border-left:5px solid #ffc107}
-.settled{background:#d4edda;border-left:5px solid #28a745}
-.status{font-weight:bold;text-align:right}
-#logo{width:120px;height:120px;margin:0 auto 20px;animation:spin 5s linear infinite}
-#lang-switch{margin-bottom:20px;text-align:center}
-@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
+header { background:#4CAF50; color:#fff; padding:20px; text-align:center; position:relative; }
+header img { height:50px; animation:spin 10s linear infinite; }
+@keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+nav { text-align:right; padding:10px 20px; }
+nav select { padding:5px; }
+main { padding:20px; text-align:center; }
+button { padding:10px 20px; margin:10px; font-size:16px; cursor:pointer; border:none; border-radius:5px; background:#4CAF50; color:white; }
+footer { text-align:center; padding:20px; background:#333; color:white; }
+input { padding:5px; margin:5px; width:200px; }
+form { display:inline-block; text-align:left; }
 </style>
 </head>
 <body>
 
-<img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Globe_icon.svg/1024px-Globe_icon.svg.png" alt="Logo">
-<h1 id="site-title">International Teleworking Job Search</h1>
+<header>
+<img src="https://via.placeholder.com/50" alt="Logo">
+<h1 id="title">Welcome to Global Telework</h1>
+</header>
 
-<div id="lang-switch">
-  <button class="button" onclick="switchLang('en')">EN</button>
-  <button class="button" onclick="switchLang('fa')">FA</button>
-</div>
+<nav>
+<label for="language-switch">Language:</label>
+<select id="language-switch">
+  <option value="en">English</option>
+  <option value="fa">فارسی</option>
+  <option value="ar">العربية</option>
+  <option value="es">Español</option>
+  <option value="fr">Français</option>
+  <option value="ru">Русский</option>
+  <option value="zh">中文</option>
+</select>
+</nav>
 
-<div class="container">
-  <h2 id="reg-title">ثبت نام اولیه</h2>
-  <p>نام مستعار (Username):</p>
-  <input type="text" id="username" placeholder="وارد کنید">
-  <p>مهارت‌ها:</p>
-  <textarea id="skills" placeholder="مثلاً طراحی، برنامه‌نویسی..."></textarea>
-  <p>پروژه مورد نظر:</p>
-  <select id="project-select">
-    <option value="">انتخاب کنید / Select Project</option>
-    <option value="web_dev">توسعه وب / Web Development</option>
-    <option value="graphic_design">طراحی گرافیک / Graphic Design</option>
-    <option value="content_writing">تولید محتوا / Content Writing</option>
-    <option value="marketing">بازاریابی / Marketing</option>
-    <option value="mobile_app">توسعه اپلیکیشن موبایل / Mobile App</option>
-  </select>
-  <p>زبان / کشور:</p>
-  <select id="country-lang">
-    <option value="">انتخاب کنید / Select Country</option>
-    <option value="fa">ایران / Persian</option>
-    <option value="en">ایالات متحده / English</option>
-    <option value="ar">عربستان / Arabic</option>
-    <option value="es">اسپانیا / Spanish</option>
-    <option value="fr">فرانسه / French</option>
-    <option value="de">آلمان / German</option>
-    <option value="ru">روسیه / Russian</option>
-    <option value="zh">چین / Chinese</option>
-  </select>
-  <p>نوع ثبت نام:</p>
-  <select id="user-type">
-    <option value="worker">کارجو</option>
-    <option value="employer">کارفرما</option>
-  </select>
-  <p>مبلغ ثبت نام: <b id="fee-label">2 USDT</b></p>
-  <p>TxID پرداخت:</p>
-  <input type="text" id="txid" placeholder="TxID">
-  <button class="button" onclick="register()" id="reg-btn">ثبت نام و پرداخت</button>
-</div>
+<main>
+<p id="description">Find international remote jobs easily.</p>
 
-<div class="container">
-  <h2>پرداخت (USDT - TRC20)</h2>
-  <p><b>Wallet Address:</b></p>
-  <input type="text" value="TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq" readonly onclick="this.select()">
-  <p style="font-size:14px;color:#555">
-    شبکه: TRC20 (TRON) <br>
-    مبلغ را دقیقاً ارسال کرده و سپس TxID را وارد کنید.
-  </p>
-  <p>یا QR Code:</p>
-  <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq" alt="QR Code USDT">
-</div>
+<h2>Register</h2>
+<form id="register-form" action="payment.html">
+<label>Username:<br> <input type="text" name="username" required></label><br>
+<label>Skills:<br> <input type="text" name="skills" required></label><br>
+<label>Country:<br> <input type="text" name="country"></label><br>
+<button type="submit">Proceed to Payment</button>
+</form>
 
-<div class="container">
-  <h2 id="profile-title">پروفایل کاربر</h2>
-  <div id="transactions">
-    <p id="no-trans">هیچ تراکنشی وجود ندارد</p>
-  </div>
-  <a href="https://t.me/GlobalTeleworkOfficial" target="_blank">
-    <button class="button" id="tg-btn">ورود به گروه تلگرام</button>
-  </a>
-</div>
+<h2>Payment</h2>
+<p>Pay 2 USDT to register. Work will start after payment confirmation.</p>
+<form id="payment-form" action="success.html">
+<label>Wallet Address:<br> <input type="text" value="TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq" readonly></label><br>
+<button type="submit">Confirm Payment</button>
+</form>
+
+</main>
+
+<footer>
+<p>Join our Telegram: <a href="https://t.me/GlobalTeleworkOfficial" target="_blank">@GlobalTeleworkOfficial</a></p>
+</footer>
 
 <script>
-const REGISTRATION_FEE_WORKER = 2;
-const REGISTRATION_FEE_EMPLOYER = 1;
+const texts = {
+en: { title:"Welcome to Global Telework", description:"Find international remote jobs easily.", register:"Proceed to Payment", payment:"Confirm Payment" },
+fa: { title:"خوش آمدید به کاریابی بین الملل دورکاری", description:"به راحتی مشاغل دورکاری بین المللی پیدا کنید.", register:"پرداخت", payment:"تایید پرداخت" },
+ar: { title:"مرحبا بكم في العمل عن بعد العالمي", description:"ابحث عن وظائف دولية عن بعد بسهولة.", register:"الدفع", payment:"تأكيد الدفع" },
+es: { title:"Bienvenido a Global Telework", description:"Encuentra trabajos remotos internacionales fácilmente.", register:"Pagar", payment:"Confirmar Pago" },
+fr: { title:"Bienvenue à Global Telework", description:"Trouvez facilement des emplois à distance internationaux.", register:"Payer", payment:"Confirmer le paiement" },
+ru: { title:"Добро пожаловать в Global Telework", description:"Легко находите международные удалённые работы.", register:"Оплатить", payment:"Подтвердить оплату" },
+zh: { title:"欢迎来到全球远程工作", description:"轻松找到国际远程工作机会。", register:"支付", payment:"确认支付" }
+};
 
-const usernameInput = document.getElementById('username');
-const skillsInput = document.getElementById('skills');
-const userTypeSelect = document.getElementById('user-type');
-const txInput = document.getElementById('txid');
-const feeLabel = document.getElementById('fee-label');
-const projectSelect = document.getElementById('project-select');
-const countryLangSelect = document.getElementById('country-lang');
-
-let lang = 'fa';
-let transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
-
-userTypeSelect.addEventListener('change', ()=>{
-  feeLabel.innerText = userTypeSelect.value==='worker'?'2 USDT':'1 USDT';
+document.getElementById('language-switch').addEventListener('change', function(){
+  const lang = this.value;
+  document.getElementById('title').textContent = texts[lang].title;
+  document.getElementById('description').textContent = texts[lang].description;
+  document.querySelector('#register-form button').textContent = texts[lang].register;
+  document.querySelector('#payment-form button').textContent = texts[lang].payment;
 });
-
-function register(){
-  const username = usernameInput.value.trim();
-  const skills = skillsInput.value.trim();
-  const txid = txInput.value.trim();
-  const project = projectSelect.value;
-  const countryLang = countryLangSelect.value;
-
-  if(!username || !skills || !txid || !project || !countryLang){
-    alert(lang==='fa'?'همه فیلدها را پر کنید':'Please fill all fields');
-    return;
-  }
-
-  const type = userTypeSelect.value;
-  const amount = type==='worker'?REGISTRATION_FEE_WORKER:REGISTRATION_FEE_EMPLOYER;
-
-  transactions.push({username, skills, type, amount, txid, status:'Locked', project, countryLang});
-  localStorage.setItem('transactions', JSON.stringify(transactions));
-  usernameInput.value=''; skillsInput.value=''; txInput.value=''; projectSelect.value=''; countryLangSelect.value='';
-  renderTransactions();
-  alert(lang==='fa'?'ثبت نام و پرداخت با موفقیت انجام شد':'Registration and payment successful!');
-}
-
-function renderTransactions(){
-  const container = document.getElementById('transactions');
-  container.innerHTML='';
-  if(transactions.length===0){
-    container.innerHTML='<p id="no-trans">'+(lang==='fa'?'هیچ تراکنشی وجود ندارد':'No transactions yet')+'</p>';
-    return;
-  }
-  transactions.forEach((t,i)=>{
-    const div=document.createElement('div');
-    div.className='card '+(t.status==='Locked'?'locked':t.status==='Settled'?'settled':'pending');
-    div.innerHTML=`
-      <p><b>${lang==='fa'?'نام مستعار':'Username'}:</b> ${t.username}</p>
-      <p><b>${lang==='fa'?'مهارت‌ها':'Skills'}:</b> ${t.skills}</p>
-      <p><b>${lang==='fa'?'پروژه':'Project'}:</b> ${t.project}</p>
-      <p><b>${lang==='fa'?'کشور / زبان':'Country / Language'}:</b> ${t.countryLang}</p>
-      <p><b>${lang==='fa'?'نوع کاربر':'User Type'}:</b> ${t.type}</p>
-      <p><b>${lang==='fa'?'مبلغ':'Amount'}:</b> ${t.amount} USDT</p>
-      <p><b>TxID:</b> ${t.txid}</p>
-      <p><b>${lang==='fa'?'وضعیت':'Status'}:</b> <span class="status">${t.status}</span></p>
-      ${t.status==='Locked'?`<button class="button" onclick="confirmCompletion(${i})">${lang==='fa'?'تأیید انجام کار':'Confirm Completion'}</button>`:''}
-      ${t.status==='Settled'?`<p>${lang==='fa'?'کمیسیون ۱۰٪':'Commission 10%'}: ${t.amount*0.1} USDT</p>
-      <p>${lang==='fa'?'قابل پرداخت به کارجو':'Payable to Worker'}: ${t.amount*0.9} USDT</p>`:''}
-    `;
-    container.appendChild(div);
-  });
-}
-
-function confirmCompletion(index){
-  if(confirm(lang==='fa'?'آیا می‌خواهید کار را تأیید و پول را آزاد کنید؟':'Confirm completion and release payment?')){
-    transactions[index].status='Settled';
-    localStorage.setItem('transactions', JSON.stringify(transactions));
-    renderTransactions();
-  }
-}
-
-function switchLang(l){
-  lang=l;
-  document.getElementById('site-title').innerText='International Teleworking Job Search';
-  document.getElementById('reg-title').innerText = lang==='fa'?'ثبت نام اولیه':'Initial Registration';
-  document.getElementById('profile-title').innerText = lang==='fa'?'پروفایل کاربر':'User Profile';
-  document.getElementById('reg-btn').innerText = lang==='fa'?'ثبت نام و پرداخت':'Register & Pay';
-  document.getElementById('tg-btn').innerText = lang==='fa'?'ورود به گروه تلگرام':'Join Telegram Group';
-  feeLabel.innerText = userTypeSelect.value==='worker'?'2 USDT':'1 USDT';
-  renderTransactions();
-}
-
-renderTransactions();
 </script>
 
 </body>
