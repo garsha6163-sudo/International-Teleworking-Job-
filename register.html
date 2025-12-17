@@ -1,206 +1,170 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register – International Teleworking Job Search</title>
+<title>International Teleworking Job Registration</title>
 
 <style>
-:root{
-  --blue-dark:#0a2540;
-  --blue:#0d6efd;
-  --blue-light:#e7f1ff;
-  --white:#ffffff;
-  --gray:#f4f6f8;
-}
-*{
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
-}
 body{
   margin:0;
-  background:linear-gradient(180deg,var(--blue-dark),#081b2f);
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#0a2540,#081b2f);
   color:#fff;
 }
 header{
-  padding:30px 15px;
   text-align:center;
-}
-header h1{
-  margin:0;
-  font-size:1.6rem;
-}
-header p{
-  margin-top:8px;
-  color:#cfe2ff;
-  font-size:0.9rem;
+  padding:30px 15px;
 }
 .container{
-  background:var(--gray);
+  background:#f4f6f8;
   color:#000;
-  border-radius:22px 22px 0 0;
-  padding:20px;
-  max-width:700px;
+  max-width:720px;
   margin:auto;
+  border-radius:24px 24px 0 0;
+  padding:20px;
 }
-.section{
+.box{
   background:#fff;
-  border-radius:16px;
-  padding:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 8px 20px rgba(0,0,0,.1);
 }
 label{
+  margin-top:14px;
   display:block;
-  margin-top:15px;
   font-weight:bold;
-  font-size:0.9rem;
 }
-input, textarea{
+input,textarea{
   width:100%;
-  padding:12px;
   margin-top:6px;
+  padding:12px;
+  border-radius:12px;
   border:1px solid #ccc;
-  border-radius:10px;
-  font-size:0.95rem;
 }
-textarea{ resize:vertical; }
-.btn{
+textarea{resize:vertical}
+button.main{
   width:100%;
-  background:var(--blue);
-  color:#fff;
-  border:none;
+  margin-top:22px;
   padding:15px;
-  border-radius:14px;
+  border:none;
+  border-radius:16px;
+  background:#0d6efd;
+  color:#fff;
   font-size:1rem;
   font-weight:bold;
-  margin-top:20px;
-  cursor:pointer;
 }
-.btn:active{ transform:scale(0.97); }
-
-.lang-switch{
+.lang{
   text-align:center;
   margin-bottom:15px;
 }
-.lang-switch button{
+.lang button{
+  margin:3px;
+  padding:7px 12px;
   border:none;
-  padding:8px 14px;
-  margin:0 4px;
   border-radius:20px;
+  font-size:.8rem;
   cursor:pointer;
-  background:#e7f1ff;
-  color:#0d6efd;
-  font-size:0.8rem;
 }
-.lang-switch button.active{
+.lang .active{
   background:#0d6efd;
   color:#fff;
 }
-
-.notice{
+.note{
   background:#fff3cd;
   color:#664d03;
   padding:12px;
   border-radius:12px;
-  font-size:0.85rem;
   margin-top:15px;
+  font-size:.85rem;
 }
-
-.footer{
+footer{
   text-align:center;
-  font-size:0.75rem;
+  font-size:.75rem;
   color:#cfe2ff;
   padding:20px 10px;
 }
 </style>
 
 <script>
-const texts = {
-  en:{
-    title:"Register",
-    subtitle:"International Teleworking Job Search",
-    user:"Username (nickname)",
-    skills:"Skills",
-    skillsPH:"Example: Translation, AI, Programming, Design...",
-    country:"Country (optional)",
-    submit:"Submit Registration",
-    notice:"No phone number, email, or address is collected. Registration is reviewed after payment confirmation."
-  },
-  fa:{
-    title:"ثبت‌نام",
-    subtitle:"کاریابی بین‌المللی دورکاری",
-    user:"نام مستعار",
-    skills:"مهارت‌ها",
-    skillsPH:"مثال: ترجمه، هوش مصنوعی، برنامه‌نویسی، طراحی...",
-    country:"کشور (اختیاری)",
-    submit:"ارسال ثبت‌نام",
-    notice:"هیچ شماره، ایمیل یا آدرسی دریافت نمی‌شود. ثبت‌نام پس از تأیید پرداخت بررسی می‌گردد."
-  }
+const T={
+en:{t:"Register",s:"International Teleworking Jobs",u:"Username",k:"Skills",kp:"Example: Translation, AI, Programming",c:"Country (optional)",b:"Submit",n:"No email, phone or address required."},
+fa:{t:"ثبت‌نام",s:"کاریابی بین‌المللی دورکاری",u:"نام مستعار",k:"مهارت‌ها",kp:"مثال: ترجمه، هوش مصنوعی",c:"کشور (اختیاری)",b:"ارسال",n:"هیچ ایمیل، شماره یا آدرسی دریافت نمی‌شود."},
+ar:{t:"التسجيل",s:"وظائف العمل عن بعد",u:"اسم المستخدم",k:"المهارات",kp:"مثال: ترجمة، برمجة",c:"الدولة (اختياري)",b:"إرسال",n:"لا بريد ولا رقم هاتف."},
+es:{t:"Registro",s:"Trabajo remoto internacional",u:"Usuario",k:"Habilidades",kp:"Ej: Traducción, Programación",c:"País (opcional)",b:"Enviar",n:"Sin correo ni teléfono."},
+fr:{t:"Inscription",s:"Télétravail international",u:"Pseudo",k:"Compétences",kp:"Ex: Traduction, IA",c:"Pays (optionnel)",b:"Envoyer",n:"Aucun email requis."},
+de:{t:"Registrierung",s:"Internationale Telearbeit",u:"Benutzername",k:"Fähigkeiten",kp:"z.B. Übersetzung, KI",c:"Land (optional)",b:"Senden",n:"Keine E-Mail nötig."},
+ru:{t:"Регистрация",s:"Международная удалённая работа",u:"Никнейм",k:"Навыки",kp:"Напр.: Перевод, ИИ",c:"Страна",b:"Отправить",n:"Без почты и телефона."},
+zh:{t:"注册",s:"国际远程工作",u:"用户名",k:"技能",kp:"例如：翻译，编程",c:"国家",b:"提交",n:"无需邮箱和电话。"},
+ja:{t:"登録",s:"国際リモートワーク",u:"ユーザー名",k:"スキル",kp:"例：翻訳、AI",c:"国（任意）",b:"送信",n:"メール不要。"}
 };
 
-function switchLang(l){
-  const t=texts[l];
-  document.getElementById("title").innerText=t.title;
-  document.getElementById("subtitle").innerText=t.subtitle;
-  document.getElementById("lUser").innerText=t.user;
-  document.getElementById("lSkills").innerText=t.skills;
-  document.getElementById("skills").placeholder=t.skillsPH;
-  document.getElementById("lCountry").innerText=t.country;
-  document.getElementById("submit").innerText=t.submit;
-  document.getElementById("notice").innerText=t.notice;
-  document.body.dir=(l==="fa")?"rtl":"ltr";
-  document.querySelectorAll(".lang-switch button").forEach(b=>{
-    b.classList.toggle("active",b.dataset.lang===l);
-  });
+function setLang(l){
+ const x=T[l]||T.en;
+ document.getElementById("t").innerText=x.t;
+ document.getElementById("s").innerText=x.s;
+ document.getElementById("lu").innerText=x.u;
+ document.getElementById("lk").innerText=x.k;
+ document.getElementById("skills").placeholder=x.kp;
+ document.getElementById("lc").innerText=x.c;
+ document.getElementById("sb").innerText=x.b;
+ document.getElementById("n").innerText=x.n;
+ document.body.dir=(l==="fa"||l==="ar")?"rtl":"ltr";
+ document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("active",b.dataset.l===l));
 }
 
-function submitForm(e){
-  e.preventDefault();
-  alert("Registration submitted successfully.\nYour request will be reviewed within 24 hours.");
-  e.target.reset();
-}
+document.addEventListener("DOMContentLoaded",()=>{
+ let l=navigator.language.slice(0,2);
+ if(!T[l])l="en";
+ setLang(l);
+});
 
-document.addEventListener("DOMContentLoaded",()=>switchLang("en"));
+function send(e){
+ e.preventDefault();
+ alert("Registration submitted. Reviewed within 24 hours.");
+ e.target.reset();
+}
 </script>
 </head>
 
 <body>
 
 <header>
-  <h1 id="title"></h1>
-  <p id="subtitle"></p>
+<h1 id="t"></h1>
+<p id="s"></p>
 </header>
 
 <div class="container">
-
-  <div class="lang-switch">
-    <button data-lang="en" onclick="switchLang('en')">EN</button>
-    <button data-lang="fa" onclick="switchLang('fa')">FA</button>
-  </div>
-
-  <div class="section">
-    <form onsubmit="submitForm(event)">
-      <label id="lUser"></label>
-      <input type="text" required>
-
-      <label id="lSkills"></label>
-      <textarea id="skills" rows="4" required></textarea>
-
-      <label id="lCountry"></label>
-      <input type="text">
-
-      <div class="notice" id="notice"></div>
-
-      <button class="btn" id="submit"></button>
-    </form>
-  </div>
-
+<div class="lang">
+<button data-l="en" onclick="setLang('en')">EN</button>
+<button data-l="fa" onclick="setLang('fa')">FA</button>
+<button data-l="ar" onclick="setLang('ar')">AR</button>
+<button data-l="es" onclick="setLang('es')">ES</button>
+<button data-l="fr" onclick="setLang('fr')">FR</button>
+<button data-l="de" onclick="setLang('de')">DE</button>
+<button data-l="ru" onclick="setLang('ru')">RU</button>
+<button data-l="zh" onclick="setLang('zh')">ZH</button>
+<button data-l="ja" onclick="setLang('ja')">JP</button>
 </div>
 
-<div class="footer">
-  © 2025 International Teleworking Job Search<br>
-  Secure • Remote • International
+<div class="box">
+<form onsubmit="send(event)">
+<label id="lu"></label>
+<input required>
+<label id="lk"></label>
+<textarea id="skills" required></textarea>
+<label id="lc"></label>
+<input>
+<div class="note" id="n"></div>
+<button class="main" id="sb"></button>
+</form>
 </div>
+</div>
+
+<footer>
+© 2025 International Teleworking Job Search
+</footer>
 
 </body>
 </html>
