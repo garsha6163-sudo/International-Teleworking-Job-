@@ -1,216 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Telework</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide/dist/lucide.min.js"></script>
+<title>کاریابی بین‌الملل دورکاری | Global Telework</title>
+
 <style>
-body{font-family:'Inter',sans-serif;margin:0;padding:0;background:#eef2f7;color:#222;transition:all 0.3s;}
-section{padding:40px 20px;margin:20px auto;background:linear-gradient(135deg,#f0f4ff,#d9e6ff);border-radius:12px;max-width:900px;box-shadow:0 8px 20px rgba(0,0,0,0.08);transition:all 0.3s;}
-h1,h2,h3,h4{margin:10px 0;transition:all 0.3s;}
-.button{background:#ff6b6b;color:white;padding:12px 22px;border:none;border-radius:8px;text-decoration:none;cursor:pointer;margin-top:15px;display:inline-block;transition:all 0.3s;}
-.button:hover{background:#ff3b3b;transform:translateY(-3px);}
-.lang-switch{margin-bottom:15px;}
-.lang-switch button{margin-right:8px;padding:6px 12px;border:none;border-radius:6px;background:#eee;cursor:pointer;transition:all 0.3s;}
-.lang-switch button.active{background:#ff6b6b;color:white;}
-input,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;font-size:1em;transition:all 0.3s;}
-input:focus,textarea:focus{border-color:#ff6b6b;outline:none;box-shadow:0 0 8px rgba(255,107,107,0.4);}
-label{font-weight:600;margin-top:10px;display:block;}
-.card{background:#ffffffb3;padding:20px;border-radius:10px;margin-top:15px;box-shadow:0 4px 12px rgba(0,0,0,0.05);transition:all 0.3s;}
-.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f2f4f8;
+  color:#222;
+}
+section{
+  max-width:900px;
+  margin:30px auto;
+  background:#fff;
+  padding:30px;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08)
+}
+h1,h2{margin-top:0}
+.button{
+  background:#ff5a5a;
+  color:#fff;
+  border:none;
+  padding:12px 22px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:15px;
+}
+.button:hover{background:#e14646}
+input,textarea{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px
+}
+code{
+  display:block;
+  background:#f0f0f0;
+  padding:14px;
+  border-radius:8px;
+  word-break:break-all;
+  margin:10px 0
+}
+.hidden{display:none}
+.note{
+  background:#fff3cd;
+  padding:12px;
+  border-radius:8px;
+  margin:15px 0;
+  font-size:14px
+}
 </style>
 </head>
+
 <body>
 
-<!-- =================== INDEX =================== -->
-<section id="index">
-<h1>Global Telework <i data-feather="globe"></i></h1>
-<a href="#terms" class="button">View Terms & Conditions <i data-feather="file-text"></i></a>
-<a href="#register" class="button">Register Now <i data-feather="user-plus"></i></a>
-<div class="lang-switch">
-<button onclick="switchLang('en')">EN</button>
-<button onclick="switchLang('fa')">FA</button>
-<button onclick="switchLang('es')">ES</button>
-<button onclick="switchLang('de')">DE</button>
-</div>
+<!-- HOME -->
+<section id="home">
+<h1>کاریابی بین‌الملل دورکاری</h1>
+<p>پلتفرم جذب نیروی دورکار بین‌المللی — فقط از طریق گروه تلگرام</p>
+<button class="button" onclick="go('#terms')">مشاهده قوانین</button>
+<button class="button" onclick="go('#register')">ثبت‌نام</button>
 </section>
 
-<!-- =================== TERMS =================== -->
+<!-- TERMS -->
 <section id="terms">
-<h2>Terms & Conditions <i data-feather="clipboard"></i></h2>
-<h3 id="title"></h3>
-<p id="intro"></p>
-<h4 id="accept_title"></h4>
-<p id="accept_text"></p>
-<h4 id="payment_title"></h4>
-<ul id="payment_list"></ul>
-<h4 id="conduct_title"></h4>
-<ul id="conduct_list"></ul>
-<h4 id="cancellation_title"></h4>
-<ul id="cancellation_list"></ul>
-<h4 id="delivery_title"></h4>
-<ul id="delivery_list"></ul>
-<h4 id="ip_title"></h4>
-<p id="ip_text"></p>
-<h4 id="dispute_title"></h4>
-<p id="dispute_text"></p>
-<h4 id="changes_title"></h4>
-<p id="changes_text"></p>
-<p id="confirmation"></p>
-<a href="#register" class="button" id="accept_button">Accept & Continue</a>
+<h2>قوانین و شرایط</h2>
+<ul>
+<li>پرداخت قبل از شروع همکاری الزامی است</li>
+<li>۱۰٪ کمیسیون از هر پروژه</li>
+<li>انصراف بدون بازگشت وجه</li>
+<li>ارسال ایمیل، شماره، آدرس ممنوع</li>
+<li>همه کارها فقط دورکاری</li>
+<li>پرداخت فقط USDT شبکه TRC20</li>
+<li>چت شخصی ممنوع — فقط گروه تلگرام</li>
+</ul>
+<button class="button" onclick="go('#register')">قبول دارم</button>
 </section>
 
-<!-- =================== REGISTER =================== -->
+<!-- REGISTER -->
 <section id="register">
-<h2 id="title-register">Register <i data-feather="edit-3"></i></h2>
-<form id="registerForm" onsubmit="handleSubmit(event)">
-<label id="labelUsername" for="username"></label>
-<input type="text" id="username" name="username" required>
-<label id="labelSkills" for="skills"></label>
-<textarea id="skills" name="skills" rows="4" required></textarea>
-<label id="labelCountry" for="country"></label>
-<input type="text" id="country" name="country">
-<button type="submit" class="button" id="submitButton"></button>
+<h2>ثبت‌نام</h2>
+<form onsubmit="registerUser(event)">
+<input id="username" placeholder="نام مستعار" required>
+<textarea id="skills" placeholder="مهارت‌ها (مثلاً: Web, Design, AI...)" required></textarea>
+<input id="country" placeholder="کشور (اختیاری)">
+<button class="button">ادامه به پرداخت</button>
 </form>
 </section>
 
-<!-- =================== PAYMENT =================== -->
-<section id="payment">
-<h2>Payment Required <i data-feather="credit-card"></i></h2>
-<p><strong>Registration Fee:</strong> 10 USDT (TRC20)</p>
+<!-- PAYMENT -->
+<section id="payment" class="hidden">
+<h2>پرداخت</h2>
+<p><b>مبلغ:</b> 10 USDT (TRC20)</p>
 
-<div class="card">
-<p><strong>Wallet Address:</strong></p>
-<code id="wallet">TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq</code>
-<button class="button" onclick="copyWallet()">Copy Address</button>
-<button class="button" onclick="openTronScan()">View on TronScan</button>
-<button class="button" onclick="openWallet()">Pay with Wallet</button>
+<div class="note">
+بعد از پرداخت، روی «ورود به گروه تلگرام» بزنید و TXID را داخل گروه ارسال کنید.
 </div>
 
-<p style="margin-top:15px">
-After payment, click below to join Telegram group.
-</p>
+<code id="wallet" data-wallet="TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq"></code>
 
-<button class="button" onclick="goToTelegram()">Join Telegram Group</button>
+<button class="button" onclick="copyWallet()">کپی آدرس</button>
+<button class="button" onclick="openTronScan()">مشاهده در TronScan</button>
+<br><br>
+<button class="button" onclick="goTelegram()">ورود به گروه تلگرام</button>
 </section>
 
 <script>
-feather.replace();
+/* ===== CORE ===== */
+function go(id){location.hash=id}
 
-// ================= MultiLang Terms =================
-const texts={
-en:{terms:{title:"Terms & Conditions",intro:"Welcome to Global Telework. All work is remote and inside our Telegram group.",accept_title:"1. Acceptance of Terms",accept_text:"By registering, you agree to the rules.",payment_title:"2. Payment & Fees",payment_list:["Client must pay upfront.","10% platform commission.","USDT TRC20 only."],conduct_title:"3. User Conduct",conduct_list:["No personal contact info.","Work only inside the Telegram group."],cancellation_title:"4. Cancellation & Penalties",cancellation_list:["Cancellation after acceptance may incur penalties."],delivery_title:"5. Delivery & Deadlines",delivery_list:["All work delivered remotely inside the group."],ip_title:"6. Intellectual Property",ip_text:"All IP remains with the client after payment.",dispute_title:"7. Dispute Resolution",dispute_text:"Disputes handled per platform rules.",changes_title:"8. Changes to Terms",changes_text:"Platform may update terms anytime.",confirmation:"Please confirm that you agree with the rules.",accept_button:"Accept & Continue"}},
-fa:{terms:{title:"قوانین و شرایط",intro:"به Global Telework خوش آمدید. تمام کارها فقط داخل گروه تلگرام انجام می‌شود.",accept_title:"۱. پذیرش قوانین",accept_text:"با ثبت‌نام، شما با قوانین موافقت می‌کنید.",payment_title:"۲. پرداخت و کمیسیون",payment_list:["پرداخت توسط کارفرما قبل از شروع.","۱۰٪ کمیسیون پلتفرم.","فقط USDT TRC20."],conduct_title:"۳. رفتار کاربری",conduct_list:["عدم ارائه اطلاعات شخصی.","تمام کارها فقط داخل گروه تلگرام."],cancellation_title:"۴. انصراف و جریمه‌ها",cancellation_list:["انصراف بعد از پذیرش ممکن است جریمه داشته باشد."],delivery_title:"۵. تحویل و مهلت‌ها",delivery_list:["تمام کارها باید به صورت دورکاری و داخل گروه تحویل شوند."],ip_title:"۶. حقوق مالکیت فکری",ip_text:"تمام حقوق پس از پرداخت با کارفرما است.",dispute_title:"۷. حل اختلاف",dispute_text:"اختلافات طبق قوانین پلتفرم حل می‌شود.",changes_title:"۸. تغییرات قوانین",changes_text:"پلتفرم می‌تواند قوانین را هر زمان تغییر دهد.",confirmation:"لطفاً تأیید کنید که با قوانین موافق هستید.",accept_button:"تایید و ادامه"}},
-es:{terms:{title:"Términos y Condiciones",intro:"Bienvenido a Global Telework. Todo el trabajo se realiza solo dentro del grupo de Telegram.",accept_title:"1. Aceptación de Términos",accept_text:"Al registrarse, acepta las reglas.",payment_title:"2. Pago y Comisiones",payment_list:["El cliente debe pagar por adelantado.","10% de comisión de la plataforma.","Solo USDT TRC20."],conduct_title:"3. Conducta del Usuario",conduct_list:["No compartir información personal.","Trabajo solo dentro del grupo de Telegram."],cancellation_title:"4. Cancelación y Penalizaciones",cancellation_list:["Cancelar después de la aceptación puede generar penalizaciones."],delivery_title:"5. Entregas y Plazos",delivery_list:["Todo el trabajo se entrega de forma remota dentro del grupo."],ip_title:"6. Propiedad Intelectual",ip_text:"Todos los derechos permanecen con el cliente tras el pago.",dispute_title:"7. Resolución de Disputas",dispute_text:"Las disputas se manejarán según las reglas de la plataforma.",changes_title:"8. Cambios en los Términos",changes_text:"La plataforma puede actualizar los términos en cualquier momento.",confirmation:"Por favor confirme que está de acuerdo con las reglas.",accept_button:"Aceptar y Continuar"}},
-de:{terms:{title:"Geschäftsbedingungen",intro:"Willkommen bei Global Telework. Alle Arbeiten finden nur in der Telegram-Gruppe statt.",accept_title:"1. Annahme der Bedingungen",accept_text:"Durch die Registrierung stimmen Sie den Regeln zu.",payment_title:"2. Zahlung & Gebühren",payment_list:["Kunde muss im Voraus zahlen.","10% Plattformgebühr.","Nur USDT TRC20."],conduct_title:"3. Benutzerverhalten",conduct_list:["Keine persönlichen Kontaktdaten.","Arbeiten nur innerhalb der Telegram-Gruppe."],cancellation_title:"4. Stornierung & Strafen",cancellation_list:["Stornierung nach Annahme kann Strafen nach sich ziehen."],delivery_title:"5. Lieferung & Fristen",delivery_list:["Alle Arbeiten werden remote innerhalb der Gruppe geliefert."],ip_title:"6. Geistiges Eigentum",ip_text:"Alle IP verbleibt nach Zahlung beim Kunden.",dispute_title:"7. Streitbeilegung",dispute_text:"Streitigkeiten werden gemäß Plattformregeln behandelt.",changes_title:"8. Änderungen der Bedingungen",changes_text:"Die Plattform kann die Bedingungen jederzeit aktualisieren.",confirmation:"Bitte bestätigen Sie, dass Sie den Regeln zustimmen.",accept_button:"Akzeptieren & Weiter"}}
-};
-
-// ================= Register MultiLang =================
-const textsRegister={
-en:{title:"Register",labelUsername:"Username",labelSkills:"Skills",labelCountry:"Country (optional)",submitButton:"Submit",skillsPlaceholder:"List your skills, e.g., Web Development, Design..."},
-fa:{title:"ثبت‌نام",labelUsername:"نام مستعار",labelSkills:"مهارت‌ها",labelCountry:"کشور (اختیاری)",submitButton:"ارسال",skillsPlaceholder:"مهارت‌های خود را بنویسید، مثلا: طراحی وب، گرافیک..."},
-es:{title:"Registrarse",labelUsername:"Nombre de usuario",labelSkills:"Habilidades",labelCountry:"País (opcional)",submitButton:"Enviar",skillsPlaceholder:"Enumere sus habilidades, por ejemplo: Desarrollo Web, Diseño..."},
-de:{title:"Registrieren",labelUsername:"Benutzername",labelSkills:"Fähigkeiten",labelCountry:"Land (optional)",submitButton:"Absenden",skillsPlaceholder:"Liste deine Fähigkeiten, z.B.: Webentwicklung, Design..."}
-};
-
-function switchLang(lang){
-const page=texts[lang].terms;
-document.getElementById('title').innerText=page.title;
-document.getElementById('intro').innerText=page.intro;
-document.getElementById('accept_title').innerText=page.accept_title;
-document.getElementById('accept_text').innerText=page.accept_text;
-document.getElementById('payment_title').innerText=page.payment_title;
-document.getElementById('payment_list').innerHTML=page.payment_list.map(i=>`<li>${i}</li>`).join('');
-document.getElementById('conduct_title').innerText=page.conduct_title;
-document.getElementById('conduct_list').innerHTML=page.conduct_list.map(i=>`<li>${i}</li>`).join('');
-document.getElementById('cancellation_title').innerText=page.cancellation_title;
-document.getElementById('cancellation_list').innerHTML=page.cancellation_list.map(i=>`<li>${i}</li>`).join('');
-document.getElementById('delivery_title').innerText=page.delivery_title;
-document.getElementById('delivery_list').innerHTML=page.delivery_list.map(i=>`<li>${i}</li>`).join('');
-document.getElementById('ip_title').innerText=page.ip_title;
-document.getElementById('ip_text').innerText=page.ip_text;
-document.getElementById('dispute_title').innerText=page.dispute_title;
-document.getElementById('dispute_text').innerText=page.dispute_text;
-document.getElementById('changes_title').innerText=page.changes_title;
-document.getElementById('changes_text').innerText=page.changes_text;
-document.getElementById('confirmation').innerText=page.confirmation;
-document.getElementById('accept_button').innerText=page.accept_button;
-document.body.dir=(lang==='fa')?'rtl':'ltr';
-switchLangRegister(lang);
+/* ===== SECURITY ===== */
+function genToken(){
+  return btoa("GT_"+Date.now()+"_"+Math.random());
 }
-
-function switchLangRegister(lang){
-const page=textsRegister[lang];
-document.getElementById('title-register').innerText=page.title;
-document.getElementById('labelUsername').innerText=page.labelUsername;
-document.getElementById('labelSkills').innerText=page.labelSkills;
-document.getElementById('labelCountry').innerText=page.labelCountry;
-document.getElementById('submitButton').innerText=page.submitButton;
-document.getElementById('skills').placeholder=page.skillsPlaceholder;
-document.body.dir=(lang==='fa')?'rtl':'ltr';
-document.querySelectorAll('#index .lang-switch button').forEach(btn=>{btn.classList.toggle('active',btn.innerText.toLowerCase()===lang);});
-}
-
-// ================= Register + Telegram Redirect + Payment =================
-const WALLET = "TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq";
-
 function isRegistered(){
-    return localStorage.getItem('username');
+  return !!localStorage.getItem("gt_token");
 }
 
-function handleSubmit(event){
-event.preventDefault();
-const username=document.getElementById('username').value.trim();
-const skills=document.getElementById('skills').value.trim();
-const country=document.getElementById('country').value.trim();
-localStorage.setItem('username',username);
-localStorage.setItem('skills',skills);
-localStorage.setItem('country',country);
-alert("Registration successful! Click below to proceed to payment.");
-window.location.href="#payment";
+/* ===== REGISTER ===== */
+function registerUser(e){
+  e.preventDefault();
+  localStorage.setItem("gt_user",username.value);
+  localStorage.setItem("gt_skills",skills.value);
+  localStorage.setItem("gt_country",country.value);
+  localStorage.setItem("gt_token",genToken());
+  showPayment();
+}
+
+/* ===== PAYMENT ===== */
+const WALLET=document.getElementById("wallet").dataset.wallet;
+
+function showPayment(){
+  document.getElementById("payment").classList.remove("hidden");
+  location.hash="#payment";
 }
 
 function copyWallet(){
-navigator.clipboard.writeText(WALLET);
-alert("Wallet address copied!");
+  navigator.clipboard.writeText(WALLET);
+  alert("آدرس کیف پول کپی شد");
 }
-
 function openTronScan(){
-window.open("https://tronscan.org/#/address/" + WALLET, "_blank");
+  window.open("https://tronscan.org/#/address/"+WALLET,"_blank");
 }
 
-function openWallet(){
-window.location.href = "tronlink://";
-setTimeout(()=>{
-window.open("https://tronscan.org/#/address/" + WALLET, "_blank");
-},1200);
-}
-
-function goToTelegram(){
-if(!isRegistered()){
-    alert("❌ Please register first!");
-    window.location.href = "#register";
+/* ===== TELEGRAM ===== */
+function goTelegram(){
+  if(!isRegistered()){
+    alert("ابتدا ثبت‌نام کنید");
+    go('#register');
     return;
-}
-const tgAppLink = "tg://resolve?domain=GlobalTeleworkOfficial";
-const tgWebLink = "https://t.me/GlobalTeleworkOfficial";
-window.location.href = tgAppLink;
-setTimeout(()=>{
-    window.open(tgWebLink,"_blank");
-},1500);
+  }
+  location.href="tg://resolve?domain=GlobalTeleworkOfficial";
+  setTimeout(()=>{
+    window.open("https://t.me/GlobalTeleworkOfficial","_blank");
+  },1200);
 }
 
-// محافظت از صفحه پرداخت
-document.addEventListener("DOMContentLoaded", () => {
-if(window.location.hash === "#payment" && !isRegistered()){
-    alert("⚠️ You must register before continuing.");
-    window.location.href = "#register";
-}
-// زبان پیشفرض
-switchLang('en');
+/* ===== BLOCK SIMPLE ABUSE ===== */
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("keydown",e=>{
+  if(e.key==="F12"||(e.ctrlKey&&e.shiftKey))e.preventDefault();
 });
+
+/* ===== HASH CHECK ===== */
+if(location.hash==="#payment" && !isRegistered()){
+  go('#register');
+}
 </script>
 
 </body>
