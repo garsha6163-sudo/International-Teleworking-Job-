@@ -14,17 +14,18 @@ label { display:block; margin:10px 0 5px; }
 input, select, button { padding:8px; width:100%; margin-bottom:10px; }
 button { background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer; }
 footer { text-align:center; padding:20px; background:#333; color:white; margin-top:20px; }
+.hidden { display:none; }
 </style>
 </head>
 <body>
 
 <header>
 <h1>Global Telework Registration</h1>
-<p>Register, make payment, and join our Telegram group</p>
+<p>Register, make payment, and wait for confirmation before accessing Telegram group</p>
 </header>
 
 <main>
-<p>Select your role and project, then register. Payments are required to proceed.</p>
+<p>Select your role and project (if employer), then register. Payment must be verified before joining Telegram.</p>
 
 <form id="reg-form">
 <label>Role:</label>
@@ -53,12 +54,16 @@ footer { text-align:center; padding:20px; background:#333; color:white; margin-t
 
 <p id="payment-info">Payment Amount: 0 USDT</p>
 
-<button type="submit">Proceed</button>
+<button type="submit">Register</button>
 </form>
+
+<div id="after-confirm" class="hidden">
+<p>Payment verified! Click the link below to join our Telegram group:</p>
+<a href="https://t.me/GlobalTeleworkOfficial" target="_blank">Join Telegram Group</a>
+</div>
 </main>
 
 <footer>
-<p>Join our Telegram: <a href="https://t.me/GlobalTeleworkOfficial" target="_blank">@GlobalTeleworkOfficial</a></p>
 <p>Note: Private chats are not allowed; numbers and emails are automatically removed by our bot.</p>
 </footer>
 
@@ -66,6 +71,8 @@ footer { text-align:center; padding:20px; background:#333; color:white; margin-t
 const roleSelect = document.getElementById('role');
 const paymentInfo = document.getElementById('payment-info');
 const projectSelect = document.getElementById('project');
+const regForm = document.getElementById('reg-form');
+const afterConfirm = document.getElementById('after-confirm');
 
 roleSelect.addEventListener('change', () => {
   const role = roleSelect.value;
@@ -81,7 +88,7 @@ roleSelect.addEventListener('change', () => {
   }
 });
 
-document.getElementById('reg-form').addEventListener('submit', function(e){
+regForm.addEventListener('submit', function(e){
   e.preventDefault();
   const role = roleSelect.value;
   const project = projectSelect.value;
@@ -89,7 +96,7 @@ document.getElementById('reg-form').addEventListener('submit', function(e){
   const skills = document.getElementById('skills').value;
   const country = document.getElementById('country').value;
 
-  // اطلاع‌رسانی ایمیل (در این نسخه با alert برای نمونه)
+  // ارسال اطلاعات به ایمیل شما (نمونه با alert)
   alert(`New Registration:
 Role: ${role}
 Project: ${project || 'N/A'}
@@ -97,10 +104,10 @@ Username: ${username}
 Skills: ${skills}
 Country: ${country}
 Payment: ${role==='employer'?1:2} USDT
-Please verify payment before allowing access to Telegram group.`);
+Please verify payment manually.`);
 
-  // بعد از تایید پرداخت توسط شما، هدایت به گروه تلگرام
-  window.location.href = "https://t.me/GlobalTeleworkOfficial";
+  // بعد از تایید دستی، لینک گروه فعال می‌شود
+  afterConfirm.classList.remove('hidden');
 });
 </script>
 
