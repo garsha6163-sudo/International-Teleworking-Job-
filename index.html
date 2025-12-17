@@ -11,10 +11,10 @@ h1,h2{color:#111;text-align:center;margin-bottom:10px}
 .container{background:#fff;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.1);padding:20px;width:100%;max-width:500px;margin-bottom:20px}
 .button{background:#6366f1;color:#fff;padding:10px 15px;border:none;border-radius:8px;cursor:pointer;font-size:16px;margin-top:10px}
 input, select, textarea{width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
+input[readonly]{background:#f0f0f0;cursor:pointer}
 .card{background:#f9f9f9;padding:12px;margin:8px 0;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
 .locked{background:#fff3cd;border-left:5px solid #ffc107}
 .settled{background:#d4edda;border-left:5px solid #28a745}
-.pending{background:#cce5ff;border-left:5px solid #007bff}
 .status{font-weight:bold;text-align:right}
 #logo{width:120px;height:120px;margin:0 auto 20px;animation:spin 5s linear infinite}
 #lang-switch{margin-bottom:20px;text-align:center}
@@ -37,6 +37,27 @@ input, select, textarea{width:100%;padding:8px;margin:6px 0;border:1px solid #cc
   <input type="text" id="username" placeholder="وارد کنید">
   <p>مهارت‌ها:</p>
   <textarea id="skills" placeholder="مثلاً طراحی، برنامه‌نویسی..."></textarea>
+  <p>پروژه مورد نظر:</p>
+  <select id="project-select">
+    <option value="">انتخاب کنید / Select Project</option>
+    <option value="web_dev">توسعه وب / Web Development</option>
+    <option value="graphic_design">طراحی گرافیک / Graphic Design</option>
+    <option value="content_writing">تولید محتوا / Content Writing</option>
+    <option value="marketing">بازاریابی / Marketing</option>
+    <option value="mobile_app">توسعه اپلیکیشن موبایل / Mobile App</option>
+  </select>
+  <p>زبان / کشور:</p>
+  <select id="country-lang">
+    <option value="">انتخاب کنید / Select Country</option>
+    <option value="fa">ایران / Persian</option>
+    <option value="en">ایالات متحده / English</option>
+    <option value="ar">عربستان / Arabic</option>
+    <option value="es">اسپانیا / Spanish</option>
+    <option value="fr">فرانسه / French</option>
+    <option value="de">آلمان / German</option>
+    <option value="ru">روسیه / Russian</option>
+    <option value="zh">چین / Chinese</option>
+  </select>
   <p>نوع ثبت نام:</p>
   <select id="user-type">
     <option value="worker">کارجو</option>
@@ -49,6 +70,18 @@ input, select, textarea{width:100%;padding:8px;margin:6px 0;border:1px solid #cc
 </div>
 
 <div class="container">
+  <h2>پرداخت (USDT - TRC20)</h2>
+  <p><b>Wallet Address:</b></p>
+  <input type="text" value="TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq" readonly onclick="this.select()">
+  <p style="font-size:14px;color:#555">
+    شبکه: TRC20 (TRON) <br>
+    مبلغ را دقیقاً ارسال کرده و سپس TxID را وارد کنید.
+  </p>
+  <p>یا QR Code:</p>
+  <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq" alt="QR Code USDT">
+</div>
+
+<div class="container">
   <h2 id="profile-title">پروفایل کاربر</h2>
   <div id="transactions">
     <p id="no-trans">هیچ تراکنشی وجود ندارد</p>
@@ -56,12 +89,6 @@ input, select, textarea{width:100%;padding:8px;margin:6px 0;border:1px solid #cc
   <a href="https://t.me/GlobalTeleworkOfficial" target="_blank">
     <button class="button" id="tg-btn">ورود به گروه تلگرام</button>
   </a>
-</div>
-
-<div class="container">
-  <h2>پرداخت با QR Code</h2>
-  <p>اسکن کنید و مبلغ ثبت نام را واریز کنید:</p>
-  <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq" alt="QR Code USDT">
 </div>
 
 <script>
@@ -73,6 +100,8 @@ const skillsInput = document.getElementById('skills');
 const userTypeSelect = document.getElementById('user-type');
 const txInput = document.getElementById('txid');
 const feeLabel = document.getElementById('fee-label');
+const projectSelect = document.getElementById('project-select');
+const countryLangSelect = document.getElementById('country-lang');
 
 let lang = 'fa';
 let transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
@@ -85,15 +114,20 @@ function register(){
   const username = usernameInput.value.trim();
   const skills = skillsInput.value.trim();
   const txid = txInput.value.trim();
-  if(!username || !skills || !txid){
+  const project = projectSelect.value;
+  const countryLang = countryLangSelect.value;
+
+  if(!username || !skills || !txid || !project || !countryLang){
     alert(lang==='fa'?'همه فیلدها را پر کنید':'Please fill all fields');
     return;
   }
+
   const type = userTypeSelect.value;
   const amount = type==='worker'?REGISTRATION_FEE_WORKER:REGISTRATION_FEE_EMPLOYER;
-  transactions.push({username, skills, type, amount, txid, status:'Locked'});
+
+  transactions.push({username, skills, type, amount, txid, status:'Locked', project, countryLang});
   localStorage.setItem('transactions', JSON.stringify(transactions));
-  usernameInput.value=''; skillsInput.value=''; txInput.value='';
+  usernameInput.value=''; skillsInput.value=''; txInput.value=''; projectSelect.value=''; countryLangSelect.value='';
   renderTransactions();
   alert(lang==='fa'?'ثبت نام و پرداخت با موفقیت انجام شد':'Registration and payment successful!');
 }
@@ -111,6 +145,8 @@ function renderTransactions(){
     div.innerHTML=`
       <p><b>${lang==='fa'?'نام مستعار':'Username'}:</b> ${t.username}</p>
       <p><b>${lang==='fa'?'مهارت‌ها':'Skills'}:</b> ${t.skills}</p>
+      <p><b>${lang==='fa'?'پروژه':'Project'}:</b> ${t.project}</p>
+      <p><b>${lang==='fa'?'کشور / زبان':'Country / Language'}:</b> ${t.countryLang}</p>
       <p><b>${lang==='fa'?'نوع کاربر':'User Type'}:</b> ${t.type}</p>
       <p><b>${lang==='fa'?'مبلغ':'Amount'}:</b> ${t.amount} USDT</p>
       <p><b>TxID:</b> ${t.txid}</p>
