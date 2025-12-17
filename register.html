@@ -1,170 +1,150 @@
 
+<!-- =================== index.html =================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>International Teleworking Job Registration</title>
-
+<title>International Teleworking Jobs</title>
 <style>
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(180deg,#0a2540,#081b2f);
-  color:#fff;
-}
-header{
-  text-align:center;
-  padding:30px 15px;
-}
-.container{
-  background:#f4f6f8;
-  color:#000;
-  max-width:720px;
-  margin:auto;
-  border-radius:24px 24px 0 0;
-  padding:20px;
-}
-.box{
-  background:#fff;
-  border-radius:18px;
-  padding:18px;
-  box-shadow:0 8px 20px rgba(0,0,0,.1);
-}
-label{
-  margin-top:14px;
-  display:block;
-  font-weight:bold;
-}
-input,textarea{
-  width:100%;
-  margin-top:6px;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid #ccc;
-}
-textarea{resize:vertical}
-button.main{
-  width:100%;
-  margin-top:22px;
-  padding:15px;
-  border:none;
-  border-radius:16px;
-  background:#0d6efd;
-  color:#fff;
-  font-size:1rem;
-  font-weight:bold;
-}
-.lang{
-  text-align:center;
-  margin-bottom:15px;
-}
-.lang button{
-  margin:3px;
-  padding:7px 12px;
-  border:none;
-  border-radius:20px;
-  font-size:.8rem;
-  cursor:pointer;
-}
-.lang .active{
-  background:#0d6efd;
-  color:#fff;
-}
-.note{
-  background:#fff3cd;
-  color:#664d03;
-  padding:12px;
-  border-radius:12px;
-  margin-top:15px;
-  font-size:.85rem;
-}
-footer{
-  text-align:center;
-  font-size:.75rem;
-  color:#cfe2ff;
-  padding:20px 10px;
-}
+body{font-family:Arial,sans-serif;margin:40px;max-width:800px;line-height:1.6;}
+h1{color:#222;}
+.button{background:#0073e6;color:white;padding:12px 20px;border:none;border-radius:5px;text-decoration:none;margin-top:10px;display:inline-block;}
 </style>
+</head>
+<body>
+<h1>International Teleworking Jobs</h1>
+<a href="#terms" class="button">View Terms & Conditions</a>
+<a href="#register" class="button">Register Now</a>
+
+<!-- =================== terms.html =================== -->
+<section id="terms" style="margin-top:50px;">
+<h1>Terms & Conditions</h1>
+<div class="lang-switch">
+<button onclick="switchLang('en')">EN</button>
+<button onclick="switchLang('fa')">FA</button>
+</div>
+<h1 id="title"></h1>
+<p id="intro"></p>
+<h2 id="accept_title"></h2>
+<p id="accept_text"></p>
+<h2 id="payment_title"></h2>
+<ul id="payment_list"></ul>
+<h2 id="conduct_title"></h2>
+<ul id="conduct_list"></ul>
+<h2 id="cancellation_title"></h2>
+<ul id="cancellation_list"></ul>
+<h2 id="delivery_title"></h2>
+<ul id="delivery_list"></ul>
+<h2 id="ip_title"></h2>
+<p id="ip_text"></p>
+<h2 id="dispute_title"></h2>
+<p id="dispute_text"></p>
+<h2 id="changes_title"></h2>
+<p id="changes_text"></p>
+<p id="confirmation"></p>
+<a href="#register" class="button" id="accept_button"></a>
+</section>
+
+<!-- =================== register.html =================== -->
+<section id="register" style="margin-top:50px;">
+<h1 id="title-register">Register</h1>
+<div class="lang-switch">
+<button id="btn-en" onclick="switchLangRegister('en')">EN</button>
+<button id="btn-fa" onclick="switchLangRegister('fa')">FA</button>
+</div>
+<form id="registerForm" onsubmit="handleSubmit(event)">
+<label id="labelUsername" for="username"></label>
+<input type="text" id="username" name="username" required>
+<label id="labelSkills" for="skills"></label>
+<textarea id="skills" name="skills" rows="4" required></textarea>
+<label id="labelCountry" for="country"></label>
+<input type="text" id="country" name="country">
+<button type="submit" class="button" id="submitButton"></button>
+</form>
+</section>
+
+<!-- =================== payment.html =================== -->
+<section id="payment" style="margin-top:50px;">
+<h1>پرداخت عضویت</h1>
+<p>اطلاعات ثبت‌نام شما:</p>
+<div class="info" style="background:#f0f0f0;padding:15px;border-radius:5px;margin-top:15px;">
+<p><strong>نام مستعار:</strong> <span id="username-display"></span></p>
+<p><strong>مهارت‌ها:</strong> <span id="skills-display"></span></p>
+<p><strong>کشور:</strong> <span id="country-display"></span></p>
+</div>
+<p>لطفاً برای تکمیل ثبت‌نام، پرداخت عضویت را انجام دهید:</p>
+<button class="button" onclick="goToPayment()">پرداخت با USDT TRC20</button>
+</section>
 
 <script>
-const T={
-en:{t:"Register",s:"International Teleworking Jobs",u:"Username",k:"Skills",kp:"Example: Translation, AI, Programming",c:"Country (optional)",b:"Submit",n:"No email, phone or address required."},
-fa:{t:"ثبت‌نام",s:"کاریابی بین‌المللی دورکاری",u:"نام مستعار",k:"مهارت‌ها",kp:"مثال: ترجمه، هوش مصنوعی",c:"کشور (اختیاری)",b:"ارسال",n:"هیچ ایمیل، شماره یا آدرسی دریافت نمی‌شود."},
-ar:{t:"التسجيل",s:"وظائف العمل عن بعد",u:"اسم المستخدم",k:"المهارات",kp:"مثال: ترجمة، برمجة",c:"الدولة (اختياري)",b:"إرسال",n:"لا بريد ولا رقم هاتف."},
-es:{t:"Registro",s:"Trabajo remoto internacional",u:"Usuario",k:"Habilidades",kp:"Ej: Traducción, Programación",c:"País (opcional)",b:"Enviar",n:"Sin correo ni teléfono."},
-fr:{t:"Inscription",s:"Télétravail international",u:"Pseudo",k:"Compétences",kp:"Ex: Traduction, IA",c:"Pays (optionnel)",b:"Envoyer",n:"Aucun email requis."},
-de:{t:"Registrierung",s:"Internationale Telearbeit",u:"Benutzername",k:"Fähigkeiten",kp:"z.B. Übersetzung, KI",c:"Land (optional)",b:"Senden",n:"Keine E-Mail nötig."},
-ru:{t:"Регистрация",s:"Международная удалённая работа",u:"Никнейм",k:"Навыки",kp:"Напр.: Перевод, ИИ",c:"Страна",b:"Отправить",n:"Без почты и телефона."},
-zh:{t:"注册",s:"国际远程工作",u:"用户名",k:"技能",kp:"例如：翻译，编程",c:"国家",b:"提交",n:"无需邮箱和电话。"},
-ja:{t:"登録",s:"国際リモートワーク",u:"ユーザー名",k:"スキル",kp:"例：翻訳、AI",c:"国（任意）",b:"送信",n:"メール不要。"}
+// ====== Terms JS ======
+const texts={
+en:{terms:{title:"Terms & Conditions",intro:"Welcome to International Teleworking Jobs.",accept_title:"1. Acceptance of Terms",accept_text:"By registering, you agree to the rules.",payment_title:"2. Payment & Fees",payment_list:["Client must pay upfront.","10% platform commission.","USDT TRC20 only."],conduct_title:"3. User Conduct",conduct_list:["No personal contact info.","Remote work only."],cancellation_title:"4. Cancellation & Penalties",cancellation_list:["Cancellation after acceptance may incur penalties."],delivery_title:"5. Delivery & Deadlines",delivery_list:["All work must be delivered remotely."],ip_title:"6. Intellectual Property",ip_text:"All IP remains with the client after payment.",dispute_title:"7. Dispute Resolution",dispute_text:"Disputes will be handled according to platform rules.",changes_title:"8. Changes to Terms",changes_text:"Platform may update terms at any time.",confirmation:"Please confirm that you agree with the rules.",accept_button:"Accept & Continue"}},
+fa:{terms:{title:"قوانین و شرایط",intro:"به سایت شغل‌های بین‌المللی خوش آمدید.",accept_title:"۱. پذیرش قوانین",accept_text:"با ثبت‌نام، شما با قوانین موافقت می‌کنید.",payment_title:"۲. پرداخت و کمیسیون",payment_list:["پرداخت توسط کارفرما قبل از شروع.","۱۰٪ کمیسیون پلتفرم.","فقط USDT TRC20."],conduct_title:"۳. رفتار کاربری",conduct_list:["عدم ارائه اطلاعات شخصی.","فقط دورکاری."],cancellation_title:"۴. انصراف و جریمه‌ها",cancellation_list:["انصراف بعد از پذیرش ممکن است جریمه داشته باشد."],delivery_title:"۵. تحویل و مهلت‌ها",delivery_list:["تمام کارها باید به صورت دورکاری تحویل شوند."],ip_title:"۶. حقوق مالکیت فکری",ip_text:"تمام حقوق پس از پرداخت با کارفرما است.",dispute_title:"۷. حل اختلاف",dispute_text:"اختلافات طبق قوانین پلتفرم حل می‌شود.",changes_title:"۸. تغییرات قوانین",changes_text:"پلتفرم می‌تواند قوانین را هر زمان تغییر دهد.",confirmation:"لطفاً تأیید کنید که با قوانین موافق هستید.",accept_button:"تایید و ادامه"}}
 };
-
-function setLang(l){
- const x=T[l]||T.en;
- document.getElementById("t").innerText=x.t;
- document.getElementById("s").innerText=x.s;
- document.getElementById("lu").innerText=x.u;
- document.getElementById("lk").innerText=x.k;
- document.getElementById("skills").placeholder=x.kp;
- document.getElementById("lc").innerText=x.c;
- document.getElementById("sb").innerText=x.b;
- document.getElementById("n").innerText=x.n;
- document.body.dir=(l==="fa"||l==="ar")?"rtl":"ltr";
- document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("active",b.dataset.l===l));
+function switchLang(lang){
+const page=texts[lang].terms;
+document.getElementById('title').innerText=page.title;
+document.getElementById('intro').innerText=page.intro;
+document.getElementById('accept_title').innerText=page.accept_title;
+document.getElementById('accept_text').innerText=page.accept_text;
+document.getElementById('payment_title').innerText=page.payment_title;
+document.getElementById('payment_list').innerHTML=page.payment_list.map(i=>`<li>${i}</li>`).join('');
+document.getElementById('conduct_title').innerText=page.conduct_title;
+document.getElementById('conduct_list').innerHTML=page.conduct_list.map(i=>`<li>${i}</li>`).join('');
+document.getElementById('cancellation_title').innerText=page.cancellation_title;
+document.getElementById('cancellation_list').innerHTML=page.cancellation_list.map(i=>`<li>${i}</li>`).join('');
+document.getElementById('delivery_title').innerText=page.delivery_title;
+document.getElementById('delivery_list').innerHTML=page.delivery_list.map(i=>`<li>${i}</li>`).join('');
+document.getElementById('ip_title').innerText=page.ip_title;
+document.getElementById('ip_text').innerText=page.ip_text;
+document.getElementById('dispute_title').innerText=page.dispute_title;
+document.getElementById('dispute_text').innerText=page.dispute_text;
+document.getElementById('changes_title').innerText=page.changes_title;
+document.getElementById('changes_text').innerText=page.changes_text;
+document.getElementById('confirmation').innerText=page.confirmation;
+document.getElementById('accept_button').innerText=page.accept_button;
+document.body.dir=(lang==='fa')?'rtl':'ltr';
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
- let l=navigator.language.slice(0,2);
- if(!T[l])l="en";
- setLang(l);
-});
-
-function send(e){
- e.preventDefault();
- alert("Registration submitted. Reviewed within 24 hours.");
- e.target.reset();
+// ====== Register JS ======
+const textsRegister={en:{title:"Register",labelUsername:"Username",labelSkills:"Skills",labelCountry:"Country (optional)",submitButton:"Submit",skillsPlaceholder:"List your skills, e.g., Web Development, Design..."},fa:{title:"ثبت‌نام",labelUsername:"نام مستعار",labelSkills:"مهارت‌ها",labelCountry:"کشور (اختیاری)",submitButton:"ارسال",skillsPlaceholder:"مهارت‌های خود را بنویسید، مثلا: طراحی وب، گرافیک..."}};
+function switchLangRegister(lang){
+const page=textsRegister[lang];
+document.getElementById('title-register').innerText=page.title;
+document.getElementById('labelUsername').innerText=page.labelUsername;
+document.getElementById('labelSkills').innerText=page.labelSkills;
+document.getElementById('labelCountry').innerText=page.labelCountry;
+document.getElementById('submitButton').innerText=page.submitButton;
+document.getElementById('skills').placeholder=page.skillsPlaceholder;
+document.body.dir=(lang==='fa')?'rtl':'ltr';
+document.querySelectorAll('#register .lang-switch button').forEach(btn=>{btn.classList.toggle('active',btn.id==='btn-'+lang);});
 }
+function handleSubmit(event){
+event.preventDefault();
+const username=document.getElementById('username').value.trim();
+const skills=document.getElementById('skills').value.trim();
+const country=document.getElementById('country').value.trim();
+localStorage.setItem('username',username);
+localStorage.setItem('skills',skills);
+localStorage.setItem('country',country);
+document.getElementById('username-display').innerText=username;
+document.getElementById('skills-display').innerText=skills;
+document.getElementById('country-display').innerText=country;
+alert("ثبت نام با موفقیت انجام شد! به بخش پرداخت پایین صفحه بروید.");
+window.location.href="#payment";
+}
+
+// ====== Payment JS ======
+function goToPayment(){
+const walletLink="https://tronscan.org/#/address/TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq";
+alert("شما به صفحه پرداخت هدایت می‌شوید!");
+window.open(walletLink,"_blank");
+}
+
+// Initialize
+document.addEventListener("DOMContentLoaded",()=>{switchLang('en');switchLangRegister('en');});
 </script>
-</head>
-
-<body>
-
-<header>
-<h1 id="t"></h1>
-<p id="s"></p>
-</header>
-
-<div class="container">
-<div class="lang">
-<button data-l="en" onclick="setLang('en')">EN</button>
-<button data-l="fa" onclick="setLang('fa')">FA</button>
-<button data-l="ar" onclick="setLang('ar')">AR</button>
-<button data-l="es" onclick="setLang('es')">ES</button>
-<button data-l="fr" onclick="setLang('fr')">FR</button>
-<button data-l="de" onclick="setLang('de')">DE</button>
-<button data-l="ru" onclick="setLang('ru')">RU</button>
-<button data-l="zh" onclick="setLang('zh')">ZH</button>
-<button data-l="ja" onclick="setLang('ja')">JP</button>
-</div>
-
-<div class="box">
-<form onsubmit="send(event)">
-<label id="lu"></label>
-<input required>
-<label id="lk"></label>
-<textarea id="skills" required></textarea>
-<label id="lc"></label>
-<input>
-<div class="note" id="n"></div>
-<button class="main" id="sb"></button>
-</form>
-</div>
-</div>
-
-<footer>
-© 2025 International Teleworking Job Search
-</footer>
-
 </body>
 </html>
