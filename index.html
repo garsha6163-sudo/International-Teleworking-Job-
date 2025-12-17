@@ -6,12 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Telework Registration</title>
 <style>
-body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
+body { font-family: Arial,sans-serif; margin:0; padding:0; background:#f5f5f5; }
 header { background:#4CAF50; color:#fff; padding:20px; text-align:center; }
-header img { height:50px; animation:spin 10s linear infinite; }
-@keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
 main { padding:20px; text-align:center; }
-form { display:inline-block; text-align:left; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+form { display:inline-block; text-align:left; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); max-width:400px; }
 label { display:block; margin:10px 0 5px; }
 input, select, button { padding:8px; width:100%; margin-bottom:10px; }
 button { background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer; }
@@ -21,27 +19,27 @@ footer { text-align:center; padding:20px; background:#333; color:white; margin-t
 <body>
 
 <header>
-<img src="https://via.placeholder.com/50" alt="Logo">
-<h1 id="title">Global Telework Registration</h1>
+<h1>Global Telework Registration</h1>
+<p>Register, make payment, and join our Telegram group</p>
 </header>
 
 <main>
-<p id="description">Select your role and project, then register.</p>
+<p>Select your role and project, then register. Payments are required to proceed.</p>
 
-<form id="registration-form">
+<form id="reg-form">
 <label>Role:</label>
 <select id="role" required>
   <option value="">-- Select Role --</option>
-  <option value="employer">Employer</option>
-  <option value="worker">Worker</option>
+  <option value="employer">Employer (1 USDT)</option>
+  <option value="worker">Worker (2 USDT)</option>
 </select>
 
-<label>Project:</label>
-<select id="project" required>
+<label>Project (for Employers):</label>
+<select id="project">
   <option value="">-- Select Project --</option>
-  <option value="project1">Project 1: Website Development</option>
-  <option value="project2">Project 2: Mobile App</option>
-  <option value="project3">Project 3: Graphic Design</option>
+  <option value="website">Website Development</option>
+  <option value="mobileapp">Mobile App</option>
+  <option value="graphic">Graphic Design</option>
 </select>
 
 <label>Username:</label>
@@ -55,39 +53,54 @@ footer { text-align:center; padding:20px; background:#333; color:white; margin-t
 
 <p id="payment-info">Payment Amount: 0 USDT</p>
 
-<button type="submit">Proceed to Payment</button>
+<button type="submit">Proceed</button>
 </form>
 </main>
 
 <footer>
 <p>Join our Telegram: <a href="https://t.me/GlobalTeleworkOfficial" target="_blank">@GlobalTeleworkOfficial</a></p>
+<p>Note: Private chats are not allowed; numbers and emails are automatically removed by our bot.</p>
 </footer>
 
 <script>
 const roleSelect = document.getElementById('role');
 const paymentInfo = document.getElementById('payment-info');
+const projectSelect = document.getElementById('project');
+
 roleSelect.addEventListener('change', () => {
-    const role = roleSelect.value;
-    if(role === 'employer') paymentInfo.textContent = "Payment Amount: 1 USDT";
-    else if(role === 'worker') paymentInfo.textContent = "Payment Amount: 2 USDT";
-    else paymentInfo.textContent = "Payment Amount: 0 USDT";
+  const role = roleSelect.value;
+  if(role === 'employer') {
+    paymentInfo.textContent = "Payment Amount: 1 USDT";
+    projectSelect.required = true;
+  } else if(role === 'worker') {
+    paymentInfo.textContent = "Payment Amount: 2 USDT";
+    projectSelect.required = false;
+  } else {
+    paymentInfo.textContent = "Payment Amount: 0 USDT";
+    projectSelect.required = false;
+  }
 });
 
-document.getElementById('registration-form').addEventListener('submit', function(e){
-    e.preventDefault();
-    // بعدا می‌توان اینجا اتصال به پرداخت USDT اضافه کرد
-    const role = roleSelect.value;
-    const project = document.getElementById('project').value;
-    const username = document.getElementById('username').value;
-    const skills = document.getElementById('skills').value;
-    const country = document.getElementById('country').value;
+document.getElementById('reg-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const role = roleSelect.value;
+  const project = projectSelect.value;
+  const username = document.getElementById('username').value;
+  const skills = document.getElementById('skills').value;
+  const country = document.getElementById('country').value;
 
-    // ذخیره اطلاعات محلی یا ارسال به سرور
-    console.log({role, project, username, skills, country});
-    
-    alert(`Payment for ${role === 'employer' ? '1 USDT' : '2 USDT'} to proceed. After confirmation, join Telegram.`);
-    // هدایت به صفحه پرداخت یا ربات تلگرام
-    window.location.href = "https://t.me/GlobalTeleworkOfficial";
+  // اطلاع‌رسانی ایمیل (در این نسخه با alert برای نمونه)
+  alert(`New Registration:
+Role: ${role}
+Project: ${project || 'N/A'}
+Username: ${username}
+Skills: ${skills}
+Country: ${country}
+Payment: ${role==='employer'?1:2} USDT
+Please verify payment before allowing access to Telegram group.`);
+
+  // بعد از تایید پرداخت توسط شما، هدایت به گروه تلگرام
+  window.location.href = "https://t.me/GlobalTeleworkOfficial";
 });
 </script>
 
