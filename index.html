@@ -10,14 +10,14 @@ body{background:#f4f6fb;display:flex;flex-direction:column;align-items:center;mi
 h1,h2{color:#111;text-align:center;margin-bottom:10px}
 .container{background:#fff;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.1);padding:20px;width:100%;max-width:500px;margin-bottom:20px}
 .button{background:#6366f1;color:#fff;padding:10px 15px;border:none;border-radius:8px;cursor:pointer;font-size:16px;margin-top:10px}
-input, select{width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
+input, select, textarea{width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
 .card{background:#f9f9f9;padding:12px;margin:8px 0;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.08)}
 .locked{background:#fff3cd;border-left:5px solid #ffc107}
 .settled{background:#d4edda;border-left:5px solid #28a745}
 .pending{background:#cce5ff;border-left:5px solid #007bff}
 .status{font-weight:bold;text-align:right}
-#lang-switch{margin-bottom:20px;text-align:center}
 #logo{width:120px;height:120px;margin:0 auto 20px;animation:spin 5s linear infinite}
+#lang-switch{margin-bottom:20px;text-align:center}
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 </style>
 </head>
@@ -32,18 +32,24 @@ input, select{width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-r
 </div>
 
 <div class="container">
-  <h2 id="pay-title">پرداخت کارفرما</h2>
-  <p id="wallet-label">آدرس USDT TRC20:</p>
-  <p><b>TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq</b></p>
-  <p id="amount-label">مبلغ:</p>
-  <input type="number" id="amount" placeholder="مثال: 100">
-  <p id="txid-label">TxID (شناسه تراکنش):</p>
-  <input type="text" id="txid" placeholder="وارد کنید">
-  <button class="button" onclick="addTransaction()" id="pay-btn">ثبت پرداخت</button>
+  <h2 id="reg-title">ثبت نام اولیه</h2>
+  <p>نام مستعار (Username):</p>
+  <input type="text" id="username" placeholder="وارد کنید">
+  <p>مهارت‌ها:</p>
+  <textarea id="skills" placeholder="مثلاً طراحی، برنامه‌نویسی..."></textarea>
+  <p>نوع ثبت نام:</p>
+  <select id="user-type">
+    <option value="worker">کارجو</option>
+    <option value="employer">کارفرما</option>
+  </select>
+  <p>مبلغ ثبت نام: <b id="fee-label">2 USDT</b></p>
+  <p>TxID پرداخت:</p>
+  <input type="text" id="txid" placeholder="TxID">
+  <button class="button" onclick="register()" id="reg-btn">ثبت نام و پرداخت</button>
 </div>
 
 <div class="container">
-  <h2 id="profile-title">پروفایل کارفرما</h2>
+  <h2 id="profile-title">پروفایل کاربر</h2>
   <div id="transactions">
     <p id="no-trans">هیچ تراکنشی وجود ندارد</p>
   </div>
@@ -52,23 +58,62 @@ input, select{width:100%;padding:8px;margin:6px 0;border:1px solid #ccc;border-r
   </a>
 </div>
 
+<div class="container">
+  <h2>پرداخت با QR Code</h2>
+  <p>اسکن کنید و مبلغ ثبت نام را واریز کنید:</p>
+  <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq" alt="QR Code USDT">
+</div>
+
 <script>
+const REGISTRATION_FEE_WORKER = 2;
+const REGISTRATION_FEE_EMPLOYER = 1;
+
+const usernameInput = document.getElementById('username');
+const skillsInput = document.getElementById('skills');
+const userTypeSelect = document.getElementById('user-type');
+const txInput = document.getElementById('txid');
+const feeLabel = document.getElementById('fee-label');
+
 let lang = 'fa';
 let transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
 
+userTypeSelect.addEventListener('change', ()=>{
+  feeLabel.innerText = userTypeSelect.value==='worker'?'2 USDT':'1 USDT';
+});
+
+function register(){
+  const username = usernameInput.value.trim();
+  const skills = skillsInput.value.trim();
+  const txid = txInput.value.trim();
+  if(!username || !skills || !txid){
+    alert(lang==='fa'?'همه فیلدها را پر کنید':'Please fill all fields');
+    return;
+  }
+  const type = userTypeSelect.value;
+  const amount = type==='worker'?REGISTRATION_FEE_WORKER:REGISTRATION_FEE_EMPLOYER;
+  transactions.push({username, skills, type, amount, txid, status:'Locked'});
+  localStorage.setItem('transactions', JSON.stringify(transactions));
+  usernameInput.value=''; skillsInput.value=''; txInput.value='';
+  renderTransactions();
+  alert(lang==='fa'?'ثبت نام و پرداخت با موفقیت انجام شد':'Registration and payment successful!');
+}
+
 function renderTransactions(){
   const container = document.getElementById('transactions');
-  container.innerHTML = '';
+  container.innerHTML='';
   if(transactions.length===0){
     container.innerHTML='<p id="no-trans">'+(lang==='fa'?'هیچ تراکنشی وجود ندارد':'No transactions yet')+'</p>';
     return;
   }
   transactions.forEach((t,i)=>{
-    const div = document.createElement('div');
+    const div=document.createElement('div');
     div.className='card '+(t.status==='Locked'?'locked':t.status==='Settled'?'settled':'pending');
     div.innerHTML=`
+      <p><b>${lang==='fa'?'نام مستعار':'Username'}:</b> ${t.username}</p>
+      <p><b>${lang==='fa'?'مهارت‌ها':'Skills'}:</b> ${t.skills}</p>
+      <p><b>${lang==='fa'?'نوع کاربر':'User Type'}:</b> ${t.type}</p>
       <p><b>${lang==='fa'?'مبلغ':'Amount'}:</b> ${t.amount} USDT</p>
-      <p><b>${lang==='fa'?'TxID':'TxID'}:</b> ${t.txid}</p>
+      <p><b>TxID:</b> ${t.txid}</p>
       <p><b>${lang==='fa'?'وضعیت':'Status'}:</b> <span class="status">${t.status}</span></p>
       ${t.status==='Locked'?`<button class="button" onclick="confirmCompletion(${i})">${lang==='fa'?'تأیید انجام کار':'Confirm Completion'}</button>`:''}
       ${t.status==='Settled'?`<p>${lang==='fa'?'کمیسیون ۱۰٪':'Commission 10%'}: ${t.amount*0.1} USDT</p>
@@ -78,35 +123,22 @@ function renderTransactions(){
   });
 }
 
-function addTransaction(){
-  const amount=document.getElementById('amount').value;
-  const txid=document.getElementById('txid').value.trim();
-  if(!amount || !txid){alert(lang==='fa'?'مقدار و TxID را وارد کنید':'Please enter amount and TxID'); return;}
-  transactions.push({amount:Number(amount),txid,status:'Locked'});
-  localStorage.setItem('transactions',JSON.stringify(transactions));
-  document.getElementById('amount').value='';
-  document.getElementById('txid').value='';
-  renderTransactions();
-}
-
 function confirmCompletion(index){
   if(confirm(lang==='fa'?'آیا می‌خواهید کار را تأیید و پول را آزاد کنید؟':'Confirm completion and release payment?')){
     transactions[index].status='Settled';
-    localStorage.setItem('transactions',JSON.stringify(transactions));
+    localStorage.setItem('transactions', JSON.stringify(transactions));
     renderTransactions();
   }
 }
 
 function switchLang(l){
   lang=l;
-  document.getElementById('site-title').innerText=lang==='fa'?'International Teleworking Job Search':'International Teleworking Job Search';
-  document.getElementById('pay-title').innerText=lang==='fa'?'پرداخت کارفرما':'Employer Payment';
-  document.getElementById('wallet-label').innerText=lang==='fa'?'آدرس USDT TRC20:':'USDT TRC20 Wallet:';
-  document.getElementById('amount-label').innerText=lang==='fa'?'مبلغ:':'Amount:';
-  document.getElementById('txid-label').innerText=lang==='fa'?'TxID (شناسه تراکنش):':'TxID:';
-  document.getElementById('pay-btn').innerText=lang==='fa'?'ثبت پرداخت':'Submit Payment';
-  document.getElementById('profile-title').innerText=lang==='fa'?'پروفایل کارفرما':'Employer Profile';
-  document.getElementById('tg-btn').innerText=lang==='fa'?'ورود به گروه تلگرام':'Join Telegram Group';
+  document.getElementById('site-title').innerText='International Teleworking Job Search';
+  document.getElementById('reg-title').innerText = lang==='fa'?'ثبت نام اولیه':'Initial Registration';
+  document.getElementById('profile-title').innerText = lang==='fa'?'پروفایل کاربر':'User Profile';
+  document.getElementById('reg-btn').innerText = lang==='fa'?'ثبت نام و پرداخت':'Register & Pay';
+  document.getElementById('tg-btn').innerText = lang==='fa'?'ورود به گروه تلگرام':'Join Telegram Group';
+  feeLabel.innerText = userTypeSelect.value==='worker'?'2 USDT':'1 USDT';
   renderTransactions();
 }
 
