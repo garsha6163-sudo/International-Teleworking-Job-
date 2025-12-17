@@ -1,58 +1,70 @@
-
-<!-- =================== index.html =================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>International Teleworking Jobs</title>
+<title>Global Telework</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide/dist/lucide.min.js"></script>
 <style>
-body{font-family:Arial,sans-serif;margin:40px;max-width:800px;line-height:1.6;}
-h1{color:#222;}
-.button{background:#0073e6;color:white;padding:12px 20px;border:none;border-radius:5px;text-decoration:none;margin-top:10px;display:inline-block;}
+body{font-family:'Inter',sans-serif;margin:0;padding:0;background:#eef2f7;color:#222;transition:all 0.3s;}
+section{padding:40px 20px;margin:20px auto;background:linear-gradient(135deg,#f0f4ff,#d9e6ff);border-radius:12px;max-width:900px;box-shadow:0 8px 20px rgba(0,0,0,0.08);transition:all 0.3s;}
+h1,h2,h3,h4{margin:10px 0;transition:all 0.3s;}
+.button{background:#ff6b6b;color:white;padding:12px 22px;border:none;border-radius:8px;text-decoration:none;cursor:pointer;margin-top:15px;display:inline-block;transition:all 0.3s;}
+.button:hover{background:#ff3b3b;transform:translateY(-3px);}
+.lang-switch{margin-bottom:15px;}
+.lang-switch button{margin-right:8px;padding:6px 12px;border:none;border-radius:6px;background:#eee;cursor:pointer;transition:all 0.3s;}
+.lang-switch button.active{background:#ff6b6b;color:white;}
+input,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;font-size:1em;transition:all 0.3s;}
+input:focus,textarea:focus{border-color:#ff6b6b;outline:none;box-shadow:0 0 8px rgba(255,107,107,0.4);}
+label{font-weight:600;margin-top:10px;display:block;}
+.card{background:#ffffffb3;padding:20px;border-radius:10px;margin-top:15px;box-shadow:0 4px 12px rgba(0,0,0,0.05);transition:all 0.3s;}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
 </style>
 </head>
 <body>
-<h1>International Teleworking Jobs</h1>
-<a href="#terms" class="button">View Terms & Conditions</a>
-<a href="#register" class="button">Register Now</a>
 
-<!-- =================== terms.html =================== -->
-<section id="terms" style="margin-top:50px;">
-<h1>Terms & Conditions</h1>
+<!-- =================== INDEX =================== -->
+<section id="index">
+<h1>Global Telework <i data-feather="globe"></i></h1>
+<a href="#terms" class="button">View Terms & Conditions <i data-feather="file-text"></i></a>
+<a href="#register" class="button">Register Now <i data-feather="user-plus"></i></a>
 <div class="lang-switch">
 <button onclick="switchLang('en')">EN</button>
 <button onclick="switchLang('fa')">FA</button>
+<button onclick="switchLang('es')">ES</button>
+<button onclick="switchLang('de')">DE</button>
 </div>
-<h1 id="title"></h1>
-<p id="intro"></p>
-<h2 id="accept_title"></h2>
-<p id="accept_text"></p>
-<h2 id="payment_title"></h2>
-<ul id="payment_list"></ul>
-<h2 id="conduct_title"></h2>
-<ul id="conduct_list"></ul>
-<h2 id="cancellation_title"></h2>
-<ul id="cancellation_list"></ul>
-<h2 id="delivery_title"></h2>
-<ul id="delivery_list"></ul>
-<h2 id="ip_title"></h2>
-<p id="ip_text"></p>
-<h2 id="dispute_title"></h2>
-<p id="dispute_text"></p>
-<h2 id="changes_title"></h2>
-<p id="changes_text"></p>
-<p id="confirmation"></p>
-<a href="#register" class="button" id="accept_button"></a>
 </section>
 
-<!-- =================== register.html =================== -->
-<section id="register" style="margin-top:50px;">
-<h1 id="title-register">Register</h1>
-<div class="lang-switch">
-<button id="btn-en" onclick="switchLangRegister('en')">EN</button>
-<button id="btn-fa" onclick="switchLangRegister('fa')">FA</button>
-</div>
+<!-- =================== TERMS =================== -->
+<section id="terms">
+<h2>Terms & Conditions <i data-feather="clipboard"></i></h2>
+<h3 id="title"></h3>
+<p id="intro"></p>
+<h4 id="accept_title"></h4>
+<p id="accept_text"></p>
+<h4 id="payment_title"></h4>
+<ul id="payment_list"></ul>
+<h4 id="conduct_title"></h4>
+<ul id="conduct_list"></ul>
+<h4 id="cancellation_title"></h4>
+<ul id="cancellation_list"></ul>
+<h4 id="delivery_title"></h4>
+<ul id="delivery_list"></ul>
+<h4 id="ip_title"></h4>
+<p id="ip_text"></p>
+<h4 id="dispute_title"></h4>
+<p id="dispute_text"></p>
+<h4 id="changes_title"></h4>
+<p id="changes_text"></p>
+<p id="confirmation"></p>
+<a href="#register" class="button" id="accept_button">Accept & Continue</a>
+</section>
+
+<!-- =================== REGISTER =================== -->
+<section id="register">
+<h2 id="title-register">Register <i data-feather="edit-3"></i></h2>
 <form id="registerForm" onsubmit="handleSubmit(event)">
 <label id="labelUsername" for="username"></label>
 <input type="text" id="username" name="username" required>
@@ -64,25 +76,33 @@ h1{color:#222;}
 </form>
 </section>
 
-<!-- =================== payment.html =================== -->
-<section id="payment" style="margin-top:50px;">
-<h1>پرداخت عضویت</h1>
-<p>اطلاعات ثبت‌نام شما:</p>
-<div class="info" style="background:#f0f0f0;padding:15px;border-radius:5px;margin-top:15px;">
-<p><strong>نام مستعار:</strong> <span id="username-display"></span></p>
-<p><strong>مهارت‌ها:</strong> <span id="skills-display"></span></p>
-<p><strong>کشور:</strong> <span id="country-display"></span></p>
-</div>
-<p>لطفاً برای تکمیل ثبت‌نام، پرداخت عضویت را انجام دهید:</p>
-<button class="button" onclick="goToPayment()">پرداخت با USDT TRC20</button>
+<!-- =================== PAYMENT / TELEGRAM REDIRECT =================== -->
+<section id="payment">
+<h2>Next Step: Join Our Telegram Group <i data-feather="users"></i></h2>
+<p>All jobs and activities will happen <strong>only inside the Telegram group</strong>.</p>
+<p>Click below to join and start collaborating:</p>
+<button class="button" onclick="goToTelegram()">Join Telegram Group <i data-feather="send"></i></button>
 </section>
 
 <script>
-// ====== Terms JS ======
+feather.replace(); // icons
+
+// ====== MultiLang Terms ======
 const texts={
-en:{terms:{title:"Terms & Conditions",intro:"Welcome to International Teleworking Jobs.",accept_title:"1. Acceptance of Terms",accept_text:"By registering, you agree to the rules.",payment_title:"2. Payment & Fees",payment_list:["Client must pay upfront.","10% platform commission.","USDT TRC20 only."],conduct_title:"3. User Conduct",conduct_list:["No personal contact info.","Remote work only."],cancellation_title:"4. Cancellation & Penalties",cancellation_list:["Cancellation after acceptance may incur penalties."],delivery_title:"5. Delivery & Deadlines",delivery_list:["All work must be delivered remotely."],ip_title:"6. Intellectual Property",ip_text:"All IP remains with the client after payment.",dispute_title:"7. Dispute Resolution",dispute_text:"Disputes will be handled according to platform rules.",changes_title:"8. Changes to Terms",changes_text:"Platform may update terms at any time.",confirmation:"Please confirm that you agree with the rules.",accept_button:"Accept & Continue"}},
-fa:{terms:{title:"قوانین و شرایط",intro:"به سایت شغل‌های بین‌المللی خوش آمدید.",accept_title:"۱. پذیرش قوانین",accept_text:"با ثبت‌نام، شما با قوانین موافقت می‌کنید.",payment_title:"۲. پرداخت و کمیسیون",payment_list:["پرداخت توسط کارفرما قبل از شروع.","۱۰٪ کمیسیون پلتفرم.","فقط USDT TRC20."],conduct_title:"۳. رفتار کاربری",conduct_list:["عدم ارائه اطلاعات شخصی.","فقط دورکاری."],cancellation_title:"۴. انصراف و جریمه‌ها",cancellation_list:["انصراف بعد از پذیرش ممکن است جریمه داشته باشد."],delivery_title:"۵. تحویل و مهلت‌ها",delivery_list:["تمام کارها باید به صورت دورکاری تحویل شوند."],ip_title:"۶. حقوق مالکیت فکری",ip_text:"تمام حقوق پس از پرداخت با کارفرما است.",dispute_title:"۷. حل اختلاف",dispute_text:"اختلافات طبق قوانین پلتفرم حل می‌شود.",changes_title:"۸. تغییرات قوانین",changes_text:"پلتفرم می‌تواند قوانین را هر زمان تغییر دهد.",confirmation:"لطفاً تأیید کنید که با قوانین موافق هستید.",accept_button:"تایید و ادامه"}}
+en:{terms:{title:"Terms & Conditions",intro:"Welcome to Global Telework. All work is remote and inside our Telegram group.",accept_title:"1. Acceptance of Terms",accept_text:"By registering, you agree to the rules.",payment_title:"2. Payment & Fees",payment_list:["Client must pay upfront.","10% platform commission.","USDT TRC20 only."],conduct_title:"3. User Conduct",conduct_list:["No personal contact info.","Work only inside the Telegram group."],cancellation_title:"4. Cancellation & Penalties",cancellation_list:["Cancellation after acceptance may incur penalties."],delivery_title:"5. Delivery & Deadlines",delivery_list:["All work delivered remotely inside the group."],ip_title:"6. Intellectual Property",ip_text:"All IP remains with the client after payment.",dispute_title:"7. Dispute Resolution",dispute_text:"Disputes handled per platform rules.",changes_title:"8. Changes to Terms",changes_text:"Platform may update terms anytime.",confirmation:"Please confirm that you agree with the rules.",accept_button:"Accept & Continue"}},
+fa:{terms:{title:"قوانین و شرایط",intro:"به Global Telework خوش آمدید. تمام کارها فقط داخل گروه تلگرام انجام می‌شود.",accept_title:"۱. پذیرش قوانین",accept_text:"با ثبت‌نام، شما با قوانین موافقت می‌کنید.",payment_title:"۲. پرداخت و کمیسیون",payment_list:["پرداخت توسط کارفرما قبل از شروع.","۱۰٪ کمیسیون پلتفرم.","فقط USDT TRC20."],conduct_title:"۳. رفتار کاربری",conduct_list:["عدم ارائه اطلاعات شخصی.","تمام کارها فقط داخل گروه تلگرام."],cancellation_title:"۴. انصراف و جریمه‌ها",cancellation_list:["انصراف بعد از پذیرش ممکن است جریمه داشته باشد."],delivery_title:"۵. تحویل و مهلت‌ها",delivery_list:["تمام کارها باید به صورت دورکاری و داخل گروه تحویل شوند."],ip_title:"۶. حقوق مالکیت فکری",ip_text:"تمام حقوق پس از پرداخت با کارفرما است.",dispute_title:"۷. حل اختلاف",dispute_text:"اختلافات طبق قوانین پلتفرم حل می‌شود.",changes_title:"۸. تغییرات قوانین",changes_text:"پلتفرم می‌تواند قوانین را هر زمان تغییر دهد.",confirmation:"لطفاً تأیید کنید که با قوانین موافق هستید.",accept_button:"تایید و ادامه"}},
+es:{terms:{title:"Términos y Condiciones",intro:"Bienvenido a Global Telework. Todo el trabajo se realiza solo dentro del grupo de Telegram.",accept_title:"1. Aceptación de Términos",accept_text:"Al registrarse, acepta las reglas.",payment_title:"2. Pago y Comisiones",payment_list:["El cliente debe pagar por adelantado.","10% de comisión de la plataforma.","Solo USDT TRC20."],conduct_title:"3. Conducta del Usuario",conduct_list:["No compartir información personal.","Trabajo solo dentro del grupo de Telegram."],cancellation_title:"4. Cancelación y Penalizaciones",cancellation_list:["Cancelar después de la aceptación puede generar penalizaciones."],delivery_title:"5. Entregas y Plazos",delivery_list:["Todo el trabajo se entrega de forma remota dentro del grupo."],ip_title:"6. Propiedad Intelectual",ip_text:"Todos los derechos permanecen con el cliente tras el pago.",dispute_title:"7. Resolución de Disputas",dispute_text:"Las disputas se manejarán según las reglas de la plataforma.",changes_title:"8. Cambios en los Términos",changes_text:"La plataforma puede actualizar los términos en cualquier momento.",confirmation:"Por favor confirme que está de acuerdo con las reglas.",accept_button:"Aceptar y Continuar"}},
+de:{terms:{title:"Geschäftsbedingungen",intro:"Willkommen bei Global Telework. Alle Arbeiten finden nur in der Telegram-Gruppe statt.",accept_title:"1. Annahme der Bedingungen",accept_text:"Durch die Registrierung stimmen Sie den Regeln zu.",payment_title:"2. Zahlung & Gebühren",payment_list:["Kunde muss im Voraus zahlen.","10% Plattformgebühr.","Nur USDT TRC20."],conduct_title:"3. Benutzerverhalten",conduct_list:["Keine persönlichen Kontaktdaten.","Arbeiten nur innerhalb der Telegram-Gruppe."],cancellation_title:"4. Stornierung & Strafen",cancellation_list:["Stornierung nach Annahme kann Strafen nach sich ziehen."],delivery_title:"5. Lieferung & Fristen",delivery_list:["Alle Arbeiten werden remote innerhalb der Gruppe geliefert."],ip_title:"6. Geistiges Eigentum",ip_text:"Alle IP verbleibt nach Zahlung beim Kunden.",dispute_title:"7. Streitbeilegung",dispute_text:"Streitigkeiten werden gemäß Plattformregeln behandelt.",changes_title:"8. Änderungen der Bedingungen",changes_text:"Die Plattform kann die Bedingungen jederzeit aktualisieren.",confirmation:"Bitte bestätigen Sie, dass Sie den Regeln zustimmen.",accept_button:"Akzeptieren & Weiter"}}
 };
+
+// ====== Register MultiLang ======
+const textsRegister={
+en:{title:"Register",labelUsername:"Username",labelSkills:"Skills",labelCountry:"Country (optional)",submitButton:"Submit",skillsPlaceholder:"List your skills, e.g., Web Development, Design..."},
+fa:{title:"ثبت‌نام",labelUsername:"نام مستعار",labelSkills:"مهارت‌ها",labelCountry:"کشور (اختیاری)",submitButton:"ارسال",skillsPlaceholder:"مهارت‌های خود را بنویسید، مثلا: طراحی وب، گرافیک..."},
+es:{title:"Registrarse",labelUsername:"Nombre de usuario",labelSkills:"Habilidades",labelCountry:"País (opcional)",submitButton:"Enviar",skillsPlaceholder:"Enumere sus habilidades, por ejemplo: Desarrollo Web, Diseño..."},
+de:{title:"Registrieren",labelUsername:"Benutzername",labelSkills:"Fähigkeiten",labelCountry:"Land (optional)",submitButton:"Absenden",skillsPlaceholder:"Liste deine Fähigkeiten, z.B.: Webentwicklung, Design..."}
+};
+
 function switchLang(lang){
 const page=texts[lang].terms;
 document.getElementById('title').innerText=page.title;
@@ -106,10 +126,9 @@ document.getElementById('changes_text').innerText=page.changes_text;
 document.getElementById('confirmation').innerText=page.confirmation;
 document.getElementById('accept_button').innerText=page.accept_button;
 document.body.dir=(lang==='fa')?'rtl':'ltr';
+switchLangRegister(lang);
 }
 
-// ====== Register JS ======
-const textsRegister={en:{title:"Register",labelUsername:"Username",labelSkills:"Skills",labelCountry:"Country (optional)",submitButton:"Submit",skillsPlaceholder:"List your skills, e.g., Web Development, Design..."},fa:{title:"ثبت‌نام",labelUsername:"نام مستعار",labelSkills:"مهارت‌ها",labelCountry:"کشور (اختیاری)",submitButton:"ارسال",skillsPlaceholder:"مهارت‌های خود را بنویسید، مثلا: طراحی وب، گرافیک..."}};
 function switchLangRegister(lang){
 const page=textsRegister[lang];
 document.getElementById('title-register').innerText=page.title;
@@ -119,8 +138,10 @@ document.getElementById('labelCountry').innerText=page.labelCountry;
 document.getElementById('submitButton').innerText=page.submitButton;
 document.getElementById('skills').placeholder=page.skillsPlaceholder;
 document.body.dir=(lang==='fa')?'rtl':'ltr';
-document.querySelectorAll('#register .lang-switch button').forEach(btn=>{btn.classList.toggle('active',btn.id==='btn-'+lang);});
+document.querySelectorAll('#index .lang-switch button').forEach(btn=>{btn.classList.toggle('active',btn.innerText.toLowerCase()===lang);});
 }
+
+// ====== Register + Telegram Redirect ======
 function handleSubmit(event){
 event.preventDefault();
 const username=document.getElementById('username').value.trim();
@@ -129,22 +150,19 @@ const country=document.getElementById('country').value.trim();
 localStorage.setItem('username',username);
 localStorage.setItem('skills',skills);
 localStorage.setItem('country',country);
-document.getElementById('username-display').innerText=username;
-document.getElementById('skills-display').innerText=skills;
-document.getElementById('country-display').innerText=country;
-alert("ثبت نام با موفقیت انجام شد! به بخش پرداخت پایین صفحه بروید.");
+alert("Registration successful! Click below to join our Telegram group.");
 window.location.href="#payment";
 }
 
-// ====== Payment JS ======
-function goToPayment(){
-const walletLink="https://tronscan.org/#/address/TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq";
-alert("شما به صفحه پرداخت هدایت می‌شوید!");
-window.open(walletLink,"_blank");
+// ====== Telegram Redirect ======
+function goToTelegram(){
+const telegramLink="https://t.me/GlobalTeleworkOfficial"; // لینک گروه تلگرام رسمی
+window.open(telegramLink,"_blank");
 }
 
-// Initialize
-document.addEventListener("DOMContentLoaded",()=>{switchLang('en');switchLangRegister('en');});
+// Initialize default language
+document.addEventListener("DOMContentLoaded",()=>{switchLang('en');});
 </script>
+
 </body>
 </html>
