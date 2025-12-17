@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register – International Teleworking Job Search</title>
+
+<style>
+:root{
+  --blue-dark:#0a2540;
+  --blue:#0d6efd;
+  --blue-light:#e7f1ff;
+  --white:#ffffff;
+  --gray:#f4f6f8;
+}
+*{
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+}
+body{
+  margin:0;
+  background:linear-gradient(180deg,var(--blue-dark),#081b2f);
+  color:#fff;
+}
+header{
+  padding:30px 15px;
+  text-align:center;
+}
+header h1{
+  margin:0;
+  font-size:1.6rem;
+}
+header p{
+  margin-top:8px;
+  color:#cfe2ff;
+  font-size:0.9rem;
+}
+.container{
+  background:var(--gray);
+  color:#000;
+  border-radius:22px 22px 0 0;
+  padding:20px;
+  max-width:700px;
+  margin:auto;
+}
+.section{
+  background:#fff;
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+label{
+  display:block;
+  margin-top:15px;
+  font-weight:bold;
+  font-size:0.9rem;
+}
+input, textarea{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font-size:0.95rem;
+}
+textarea{ resize:vertical; }
+.btn{
+  width:100%;
+  background:var(--blue);
+  color:#fff;
+  border:none;
+  padding:15px;
+  border-radius:14px;
+  font-size:1rem;
+  font-weight:bold;
+  margin-top:20px;
+  cursor:pointer;
+}
+.btn:active{ transform:scale(0.97); }
+
+.lang-switch{
+  text-align:center;
+  margin-bottom:15px;
+}
+.lang-switch button{
+  border:none;
+  padding:8px 14px;
+  margin:0 4px;
+  border-radius:20px;
+  cursor:pointer;
+  background:#e7f1ff;
+  color:#0d6efd;
+  font-size:0.8rem;
+}
+.lang-switch button.active{
+  background:#0d6efd;
+  color:#fff;
+}
+
+.notice{
+  background:#fff3cd;
+  color:#664d03;
+  padding:12px;
+  border-radius:12px;
+  font-size:0.85rem;
+  margin-top:15px;
+}
+
+.footer{
+  text-align:center;
+  font-size:0.75rem;
+  color:#cfe2ff;
+  padding:20px 10px;
+}
+</style>
+
+<script>
+const texts = {
+  en:{
+    title:"Register",
+    subtitle:"International Teleworking Job Search",
+    user:"Username (nickname)",
+    skills:"Skills",
+    skillsPH:"Example: Translation, AI, Programming, Design...",
+    country:"Country (optional)",
+    submit:"Submit Registration",
+    notice:"No phone number, email, or address is collected. Registration is reviewed after payment confirmation."
+  },
+  fa:{
+    title:"ثبت‌نام",
+    subtitle:"کاریابی بین‌المللی دورکاری",
+    user:"نام مستعار",
+    skills:"مهارت‌ها",
+    skillsPH:"مثال: ترجمه، هوش مصنوعی، برنامه‌نویسی، طراحی...",
+    country:"کشور (اختیاری)",
+    submit:"ارسال ثبت‌نام",
+    notice:"هیچ شماره، ایمیل یا آدرسی دریافت نمی‌شود. ثبت‌نام پس از تأیید پرداخت بررسی می‌گردد."
+  }
+};
+
+function switchLang(l){
+  const t=texts[l];
+  document.getElementById("title").innerText=t.title;
+  document.getElementById("subtitle").innerText=t.subtitle;
+  document.getElementById("lUser").innerText=t.user;
+  document.getElementById("lSkills").innerText=t.skills;
+  document.getElementById("skills").placeholder=t.skillsPH;
+  document.getElementById("lCountry").innerText=t.country;
+  document.getElementById("submit").innerText=t.submit;
+  document.getElementById("notice").innerText=t.notice;
+  document.body.dir=(l==="fa")?"rtl":"ltr";
+  document.querySelectorAll(".lang-switch button").forEach(b=>{
+    b.classList.toggle("active",b.dataset.lang===l);
+  });
+}
+
+function submitForm(e){
+  e.preventDefault();
+  alert("Registration submitted successfully.\nYour request will be reviewed within 24 hours.");
+  e.target.reset();
+}
+
+document.addEventListener("DOMContentLoaded",()=>switchLang("en"));
+</script>
+</head>
+
+<body>
+
+<header>
+  <h1 id="title"></h1>
+  <p id="subtitle"></p>
+</header>
+
+<div class="container">
+
+  <div class="lang-switch">
+    <button data-lang="en" onclick="switchLang('en')">EN</button>
+    <button data-lang="fa" onclick="switchLang('fa')">FA</button>
+  </div>
+
+  <div class="section">
+    <form onsubmit="submitForm(event)">
+      <label id="lUser"></label>
+      <input type="text" required>
+
+      <label id="lSkills"></label>
+      <textarea id="skills" rows="4" required></textarea>
+
+      <label id="lCountry"></label>
+      <input type="text">
+
+      <div class="notice" id="notice"></div>
+
+      <button class="btn" id="submit"></button>
+    </form>
+  </div>
+
+</div>
+
+<div class="footer">
+  © 2025 International Teleworking Job Search<br>
+  Secure • Remote • International
+</div>
+
+</body>
+</html>
