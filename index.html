@@ -19,14 +19,11 @@ footer { text-align:center; padding:20px; background:#333; color:white; margin-t
 #success-msg { color: green; font-weight: bold; margin-top: 15px; }
 .error { border: 2px solid red; }
 .tooltip { font-size:12px; color:#555; margin-top:-8px; margin-bottom:8px; }
-@media(max-width:600px){
-  form { padding:20px; width:90%; }
-  button { font-size:14px; }
-}
+.payment-link { background:#f5f5f5; padding:10px; border-radius:6px; margin-top:10px; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-emailjs.init("YOUR_PUBLIC_KEY"); // جایگزین با Public Key خودت
+emailjs.init("YOUR_PUBLIC_KEY"); // جایگزین با Public Key EmailJS
 </script>
 </head>
 <body>
@@ -94,10 +91,13 @@ emailjs.init("YOUR_PUBLIC_KEY"); // جایگزین با Public Key خودت
 </select>
 
 <p id="payment-info">Payment Amount: 0 USDT</p>
-<p>Send USDT TRC20 to: <strong>TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq</strong></p>
+<div class="payment-link hidden" id="payment-link"></div>
 
 <button type="submit">Register</button>
-<p id="success-msg" class="hidden">✅ Registration email sent! You can now join the Telegram group below.</p>
+<p id="success-msg" class="hidden">✅ Registration email sent! Click the button below after payment.</p>
+
+<button id="simulate-pay" class="hidden">✅ Simulate Payment Done</button>
+
 </form>
 
 <div id="after-confirm" class="hidden">
@@ -116,44 +116,28 @@ const projectSelect = document.getElementById('project');
 const regForm = document.getElementById('reg-form');
 const afterConfirm = document.getElementById('after-confirm');
 const successMsg = document.getElementById('success-msg');
+const paymentLinkDiv = document.getElementById('payment-link');
+const simulatePayBtn = document.getElementById('simulate-pay');
 
 function updatePayment() {
   const role = roleSelect.value;
-  if(role === 'employer') {
-    paymentInfo.textContent = "Payment Amount: 1 USDT";
-    projectSelect.required = true;
-  } else if(role === 'worker') {
-    paymentInfo.textContent = "Payment Amount: 2 USDT";
-    projectSelect.required = false;
-  } else {
-    paymentInfo.textContent = "Payment Amount: 0 USDT";
-    projectSelect.required = false;
-  }
+  if(role === 'employer') { paymentInfo.textContent = "Payment Amount: 1 USDT"; projectSelect.required = true; }
+  else if(role === 'worker') { paymentInfo.textContent = "Payment Amount: 2 USDT"; projectSelect.required = false; }
+  else { paymentInfo.textContent = "Payment Amount: 0 USDT"; projectSelect.required = false; }
+  paymentLinkDiv.classList.add('hidden');
 }
 
 roleSelect.addEventListener('change', updatePayment);
 
-// اعتبارسنجی فرم
 function validateForm() {
   let valid = true;
   const requiredFields = ['role','username','skills','country','language'];
   requiredFields.forEach(id => {
     const el = document.getElementById(id);
-    if(!el.value){
-      el.classList.add('error');
-      valid = false;
-    } else {
-      el.classList.remove('error');
-    }
+    if(!el.value){ el.classList.add('error'); valid=false; } else { el.classList.remove('error'); }
   });
-
-  if(roleSelect.value === 'employer' && !projectSelect.value){
-    projectSelect.classList.add('error');
-    valid = false;
-  } else {
-    projectSelect.classList.remove('error');
-  }
-
+  if(roleSelect.value==='employer' && !projectSelect.value){ projectSelect.classList.add('error'); valid=false; }
+  else{ projectSelect.classList.remove('error'); }
   return valid;
 }
 
@@ -162,26 +146,29 @@ regForm.addEventListener('submit', function(e){
   if(!validateForm()) return;
 
   const role = roleSelect.value;
-  const project = projectSelect.value;
+  const project = projectSelect.value || 'N/A';
   const username = document.getElementById('username').value;
   const skills = document.getElementById('skills').value;
   const country = document.getElementById('country').value;
   const language = document.getElementById('language').value;
-  const payment = role === 'employer' ? 1 : 2;
+  const payment = role==='employer'?1:2;
 
-  const templateParams = { role, project: project || 'N/A', username, skills, country, language, payment };
+  // ارسال ایمیل EmailJS
+  const templateParams = { role, project, username, skills, country, language, payment };
+  emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID',templateParams)
+    .then(()=>{ successMsg.classList.remove('hidden'); simulatePayBtn.classList.remove('hidden'); })
+    .catch(err=>{ alert('Email send failed'); console.error(err); });
 
-  emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
-    .then(function(response) {
-       successMsg.classList.remove('hidden');
-       afterConfirm.classList.remove('hidden');
-       regForm.reset();
-       paymentInfo.textContent = "Payment Amount: 0 USDT";
-       document.querySelectorAll('input, select').forEach(el => el.classList.remove('error'));
-    }, function(error) {
-       alert('Failed to send email. Please try again.');
-       console.log('FAILED...', error);
-    });
+  // شبیه‌سازی لینک پرداخت NOWPayments
+  paymentLinkDiv.innerHTML = `<a href="#" onclick="alert('Redirect to NOWPayments');">Click here to pay ${payment} USDT</a>`;
+  paymentLinkDiv.classList.remove('hidden');
+});
+
+// شبیه‌سازی پرداخت واقعی
+simulatePayBtn.addEventListener('click', ()=>{
+  afterConfirm.classList.remove('hidden');
+  simulatePayBtn.classList.add('hidden');
+  alert('Payment simulated as done! Telegram link activated.');
 });
 </script>
 
