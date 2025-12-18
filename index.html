@@ -95,6 +95,8 @@ footer { text-align:center; padding:20px; background:#333; color:white; margin-t
 
 <div id="success-message" class="hidden">
 <p>✅ Payment confirmed! Thank you for registering.</p>
+<p>📌 To join our Telegram group, copy the link below and search it in your Telegram app:</p>
+<p><strong>t.me/GlobalTeleworkOfficial</strong></p>
 </div>
 
 </main>
@@ -128,23 +130,6 @@ roleSelect.addEventListener('change', () => {
 
 regForm.addEventListener('submit', function(e){
   e.preventDefault();
-  const role = roleSelect.value;
-  const project = projectSelect.value;
-  const username = document.getElementById('username').value;
-  const skills = document.getElementById('skills').value;
-  const country = document.getElementById('country').value;
-  const language = document.getElementById('language').value;
-
-  alert(`New Registration:
-Role: ${role}
-Project: ${project || 'N/A'}
-Username: ${username}
-Skills: ${skills}
-Country: ${country}
-Language: ${language}
-Payment: ${role==='employer'?1:2} USDT
-Please verify payment manually.`);
-
   confirmPayment.classList.remove('hidden');
 });
 
