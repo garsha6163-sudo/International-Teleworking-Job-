@@ -14,6 +14,7 @@ input, select, button { padding:8px; width:100%; margin-bottom:10px; }
 button { background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer; }
 footer { text-align:center; padding:20px; background:#333; color:white; margin-top:20px; }
 .hidden { display:none; }
+.copy-btn { background:#2196F3; margin-top:10px; }
 </style>
 </head>
 <body>
@@ -95,8 +96,10 @@ footer { text-align:center; padding:20px; background:#333; color:white; margin-t
 
 <div id="success-message" class="hidden">
 <p>✅ Payment confirmed! Thank you for registering.</p>
-<p>📌 To join our Telegram group, copy the link below and search it in your Telegram app:</p>
-<p><strong>t.me/GlobalTeleworkOfficial</strong></p>
+<p>📌 Telegram group link:</p>
+<input type="text" id="tg-link" value="t.me/GlobalTeleworkOfficial" readonly style="width:100%; padding:8px;">
+<button class="copy-btn" id="copy-btn">Copy Link</button>
+<p>Paste this link in your Telegram app to join the group.</p>
 </div>
 
 </main>
@@ -113,6 +116,8 @@ const regForm = document.getElementById('reg-form');
 const confirmPayment = document.getElementById('confirm-payment');
 const confirmBtn = document.getElementById('confirm-btn');
 const successMessage = document.getElementById('success-message');
+const copyBtn = document.getElementById('copy-btn');
+const tgLink = document.getElementById('tg-link');
 
 roleSelect.addEventListener('change', () => {
   const role = roleSelect.value;
@@ -136,6 +141,14 @@ regForm.addEventListener('submit', function(e){
 confirmBtn.addEventListener('click', () => {
   successMessage.classList.remove('hidden');
   confirmPayment.classList.add('hidden');
+});
+
+// Copy link to clipboard
+copyBtn.addEventListener('click', () => {
+  tgLink.select();
+  tgLink.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  alert("Telegram link copied to clipboard!");
 });
 </script>
 
