@@ -2,231 +2,152 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Telework Registration</title>
-
+<title>Global Telework – Manual Payment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0}
-header{background:#4CAF50;color:#fff;padding:20px;text-align:center}
-main{padding:20px;display:flex;flex-direction:column;align-items:center}
-form{background:#fff;padding:25px;border-radius:12px;max-width:500px;width:100%;box-shadow:0 0 15px rgba(0,0,0,.15)}
-label{margin-top:12px;display:block;font-weight:bold}
-input,select,button{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
-button{background:#4CAF50;color:#fff;border:none;margin-top:15px;font-size:16px;cursor:pointer}
-button:hover{background:#45a049}
-.box{background:#f1f1f1;padding:12px;border-radius:6px;margin-top:15px;width:100%}
+body{font-family:Arial;background:#f4f4f4;margin:0;padding:0}
+header{background:#2e7d32;color:#fff;padding:15px;text-align:center}
+main{display:flex;flex-wrap:wrap;gap:20px;padding:20px;justify-content:center}
+section{background:#fff;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,.15);flex:1;min-width:320px;max-width:700px}
+label{display:block;margin-top:10px;font-weight:bold}
+input,select,button{width:100%;padding:8px;margin-top:5px;border-radius:5px;border:1px solid #ccc}
+button{background:#2e7d32;color:#fff;border:none;cursor:pointer;margin-top:10px}
+button:hover{background:#256628}
+.wallet{background:#eee;padding:8px;font-weight:bold;word-break:break-all}
+.status{font-weight:bold}
+.pending{color:orange}
+.verified{color:green}
+.rejected{color:red}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid #ccc;padding:6px;text-align:center}
 .hidden{display:none}
-.success{color:green;font-weight:bold;margin-top:10px}
-.note{font-size:13px;color:#555;margin-top:6px}
-.error{border:2px solid red}
-.wallet{word-break:break-all;font-weight:bold;color:#333;background:#eee;padding:6px;border-radius:4px;margin-top:4px}
-#paidList{background:#fff;padding:15px;border-radius:12px;max-width:500px;width:100%;box-shadow:0 0 10px rgba(0,0,0,.1);margin-top:20px;}
-#paidList h3{margin-top:0;text-align:center;}
-#paidList ul{list-style:none;padding-left:0;}
-#paidList li{padding:6px 0;border-bottom:1px solid #ddd;}
-#downloadCSV{margin-top:10px;background:#007BFF;}
-#downloadCSV:hover{background:#0056b3;}
+@media(max-width:600px){main{flex-direction:column;align-items:center}}
 </style>
-
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-emailjs.init("YOUR_PUBLIC_KEY"); // جایگزین با Public Key EmailJS
-</script>
 </head>
-
 <body>
 
 <header>
-<h1>Global Telework Registration</h1>
-<p>Manual USDT Payment (TRC20)</p>
+<h1>Global Telework – Manual USDT Payment</h1>
+<p>TRC20 Wallet: TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq</p>
 </header>
 
 <main>
-<form id="form">
 
+<!-- USER FORM -->
+<section>
+<h2>User Registration</h2>
+<form id="userForm">
 <label>Role</label>
 <select id="role" required>
-  <option value="">Select Role</option>
-  <option value="Employer">Employer (1 USDT)</option>
-  <option value="Worker">Worker (2 USDT)</option>
+<option value="">Select</option>
+<option value="Employer">Employer (1 USDT)</option>
+<option value="Worker">Worker (2 USDT)</option>
 </select>
 
-<label>Project (Only for Employers)</label>
+<label>Project (Employers only)</label>
 <select id="project">
-  <option value="">Select Project</option>
-  <option value="website">Website Development</option>
-  <option value="mobileapp">Mobile App</option>
-  <option value="graphic">Graphic Design</option>
-  <option value="marketing">Digital Marketing</option>
-  <option value="seo">SEO Optimization</option>
-  <option value="content">Content Writing</option>
-  <option value="translation">Translation</option>
-  <option value="dataentry">Data Entry</option>
-  <option value="customer">Customer Support</option>
-  <option value="uiux">UI/UX Design</option>
+<option value="">N/A</option>
+<option>Website</option>
+<option>Mobile App</option>
+<option>Design</option>
+<option>Marketing</option>
+<option>SEO</option>
 </select>
 
 <label>Username</label>
-<input id="username" placeholder="Enter your username" required>
+<input id="username" required>
 
-<label>Skills</label>
-<input id="skills" placeholder="e.g. Web, Design, Marketing" required>
+<label>TXID (Transaction Hash)</label>
+<input id="txid" placeholder="Paste TXID after payment" required>
 
-<label>Country</label>
-<input id="country" placeholder="Your country" required>
+<p>Send USDT (TRC20) to:</p>
+<div class="wallet">TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq</div>
 
-<label>Language</label>
-<input id="language" placeholder="Preferred language" required>
-
-<div class="box hidden" id="paymentBox">
-<p><b>Payment Amount:</b> <span id="amount"></span> USDT</p>
-<p><b>Network:</b> TRC20</p>
-<p><b>Wallet Address:</b></p>
-<p class="wallet">TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
-<p class="note">
-After sending the payment, click "I Paid" below to notify admin.<br>
-Do NOT send from exchanges that do not support TRC20.
-</p>
-</div>
-
-<button type="submit">Submit Registration</button>
-<button type="button" id="paidBtn" class="hidden">I Paid</button>
-
-<p class="success hidden" id="success">
-✔ Registration received<br>
-✔ Payment instructions displayed<br>
-✔ Please send USDT and click "I Paid" after payment
-</p>
-
-<p class="success hidden" id="paidSuccess">
-✔ Payment notification sent! Admin will verify manually.
-</p>
-
+<button type="submit">I Paid</button>
 </form>
+</section>
 
-<div id="paidList" class="hidden">
-<h3>Paid Users</h3>
-<ul id="paidUsers"></ul>
-<button id="downloadCSV">Download CSV</button>
-</div>
+<!-- ADMIN PANEL -->
+<section class="hidden" id="adminSection">
+<h2>Admin Panel</h2>
+<table>
+<thead>
+<tr>
+<th>User</th><th>Role</th><th>Project</th><th>Amount</th><th>TXID</th><th>Status</th><th>Action</th>
+</tr>
+</thead>
+<tbody id="adminTable"></tbody>
+</table>
+<button onclick="downloadCSV()">Download CSV</button>
+</section>
 
 </main>
 
 <script>
-const role = document.getElementById("role");
-const project = document.getElementById("project");
-const box = document.getElementById("paymentBox");
-const amount = document.getElementById("amount");
-const success = document.getElementById("success");
-const paidBtn = document.getElementById("paidBtn");
-const paidSuccess = document.getElementById("paidSuccess");
-const paidList = document.getElementById("paidList");
-const paidUsers = document.getElementById("paidUsers");
-const downloadCSV = document.getElementById("downloadCSV");
+// Password for admin panel
+const adminPassword = "admin123"; // می‌توانید تغییر دهید
+const adminSection = document.getElementById("adminSection");
 
-role.addEventListener("change", ()=>{
-  if(!role.value) return;
-  box.classList.remove("hidden");
-  amount.textContent = role.value === "Employer" ? 1 : 2;
-  if(role.value === "Employer") project.required = true;
-  else project.required = false;
-});
-
-function validateForm(){
-  let valid = true;
-  const fields = [role, username, skills, country, language];
-  fields.forEach(f=>{
-    if(!f.value){ f.classList.add("error"); valid=false; }
-    else{ f.classList.remove("error"); }
-  });
-  if(role.value==="Employer" && !project.value){ project.classList.add("error"); valid=false; }
-  else{ project.classList.remove("error"); }
-  return valid;
-}
-
-function addPaidUser(data){
-  paidList.classList.remove("hidden");
-  const li = document.createElement("li");
-  li.textContent = `${data.username} | Role: ${data.role} | Project: ${data.project} | Amount: ${data.amount} USDT`;
-  paidUsers.appendChild(li);
-  // ذخیره در localStorage
-  let paid = JSON.parse(localStorage.getItem("paidUsers") || "[]");
-  paid.push(data);
-  localStorage.setItem("paidUsers", JSON.stringify(paid));
-}
-
-// بارگذاری کاربران پرداخت شده از قبل
 window.addEventListener("load", ()=>{
-  let paid = JSON.parse(localStorage.getItem("paidUsers") || "[]");
-  if(paid.length>0){
-    paidList.classList.remove("hidden");
-    paid.forEach(d=>addPaidUser(d));
-  }
+  let pass = prompt("Enter admin password (or cancel to skip)");
+  if(pass===adminPassword) adminSection.classList.remove("hidden");
 });
 
-document.getElementById("form").addEventListener("submit", e=>{
-  e.preventDefault();
-  if(!validateForm()) return;
-
-  const data = {
-    role: role.value,
-    project: project.value || "N/A",
-    username: username.value,
-    skills: skills.value,
-    country: country.value,
-    language: language.value,
-    amount: role.value === "Employer" ? 1 : 2
-  };
-
-  emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",data)
-    .then(()=>{
-      success.classList.remove("hidden");
-      e.target.reset();
-      box.classList.remove("hidden");
-      paidBtn.classList.remove("hidden");
-    })
-    .catch(()=> alert("Email sending failed"));
-});
-
-paidBtn.addEventListener("click", ()=>{
-  const data = {
-    role: role.value || "N/A",
-    project: project.value || "N/A",
-    username: username.value || "N/A",
-    skills: skills.value || "N/A",
-    country: country.value || "N/A",
-    language: language.value || "N/A",
-    amount: role.value === "Employer" ? 1 : 2
-  };
-
-  emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID", {...data, paid: "User clicked I Paid"})
-    .then(()=>{
-      paidSuccess.classList.remove("hidden");
-      addPaidUser(data);
-      paidBtn.classList.add("hidden");
-    })
-    .catch(()=> alert("Failed to notify admin"));
-});
-
-// دانلود CSV
-downloadCSV.addEventListener("click", ()=>{
-  let paid = JSON.parse(localStorage.getItem("paidUsers") || "[]");
-  if(paid.length === 0) return alert("No paid users yet.");
-
-  let csv = "Username,Role,Project,Skills,Country,Language,Amount\n";
-  paid.forEach(d=>{
-    csv += `"${d.username}","${d.role}","${d.project}","${d.skills}","${d.country}","${d.language}","${d.amount}"\n`;
+// LocalStorage for payments
+let payments = JSON.parse(localStorage.getItem("payments") || "[]");
+function save(){ localStorage.setItem("payments", JSON.stringify(payments)); render(); }
+function render(){
+  const table = document.getElementById("adminTable");
+  table.innerHTML="";
+  payments.forEach((p,i)=>{
+    table.innerHTML += `<tr>
+      <td>${p.username}</td>
+      <td>${p.role}</td>
+      <td>${p.project}</td>
+      <td>${p.amount}</td>
+      <td>${p.txid}</td>
+      <td class="status ${p.status}">${p.status}</td>
+      <td>
+        <button onclick="verify(${i})">✔</button>
+        <button onclick="reject(${i})">✖</button>
+      </td>
+    </tr>`;
   });
+}
 
-  const blob = new Blob([csv], {type: "text/csv"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "paid_users.csv";
-  a.click();
-  URL.revokeObjectURL(url);
-});
+// User form
+document.getElementById("userForm").onsubmit=e=>{
+  e.preventDefault();
+  if(!txid.value.trim() || txid.value.trim().length<20){
+    alert("Enter valid TXID"); return;
+  }
+  payments.push({
+    username:username.value,
+    role:role.value,
+    project:project.value||"N/A",
+    amount:role.value==="Employer"?1:2,
+    txid:txid.value.trim(),
+    status:"pending"
+  });
+  save();
+  e.target.reset();
+  alert("Payment submitted. Await admin verification.");
+};
+
+function verify(i){ payments[i].status="verified"; save(); }
+function reject(i){ payments[i].status="rejected"; save(); }
+
+function downloadCSV(){
+  if(payments.length===0){alert("No payments");return;}
+  let csv="Username,Role,Project,Amount,TXID,Status\n";
+  payments.forEach(p=>{csv+=`${p.username},${p.role},${p.project},${p.amount},${p.txid},${p.status}\n`;});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
+  a.download="payments.csv"; a.click();
+}
+
+// Role change for payment amount
+role.onchange=()=>{ project.required=role.value==="Employer"; }
 </script>
-
 </body>
 </html>
