@@ -2,173 +2,156 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Global Telework – Remote Work & Freelance Projects</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Global Telework platform for remote workers and employers. Find international freelance projects and remote jobs worldwide.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Telework Registration</title>
 <style>
-body{font-family:Arial;background:#f4f4f4;margin:0;padding:0}
-header{background:#2e7d32;color:#fff;padding:15px;text-align:center}
-main{display:flex;flex-wrap:wrap;gap:20px;padding:20px;justify-content:center}
-section{background:#fff;padding:20px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,.15);flex:1;min-width:320px;max-width:700px}
-label{display:block;margin-top:10px;font-weight:bold}
-input,select,button{width:100%;padding:8px;margin-top:5px;border-radius:5px;border:1px solid #ccc}
-button{background:#2e7d32;color:#fff;border:none;cursor:pointer;margin-top:10px}
-button:hover{background:#256628}
-.wallet{background:#eee;padding:8px;font-weight:bold;word-break:break-all}
-.status{font-weight:bold}
-.pending{color:orange}
-.verified{color:green}
-.rejected{color:red}
-table{width:100%;border-collapse:collapse;margin-top:10px}
-th,td{border:1px solid #ccc;padding:6px;text-align:center}
-.hidden{display:none}
-@media(max-width:600px){main{flex-direction:column;align-items:center}}
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
+header { background:#4CAF50; color:#fff; padding:20px; text-align:center; }
+main { padding:20px; text-align:center; }
+form { display:inline-block; text-align:left; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); max-width:500px; width:90%; }
+label { display:block; margin:10px 0 5px; }
+input, select, button { padding:8px; width:100%; margin-bottom:10px; }
+button { background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer; }
+footer { text-align:center; padding:20px; background:#333; color:white; margin-top:20px; }
+.hidden { display:none; }
 </style>
 </head>
 <body>
 
 <header>
-<h1>Global Telework – Remote Work Opportunities</h1>
-<p>TRC20 Wallet: TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq</p>
+<h1>Global Telework Registration</h1>
+<p>Register, make payment, and verify manually</p>
 </header>
 
 <main>
+<p>Fill in your information and send USDT payment. Then confirm below.</p>
 
-<!-- SEO TEXT -->
-<section>
-<h2>Global Telework – Your Gateway to Remote Work Opportunities</h2>
-
-<p>Global Telework is an international platform connecting employers and remote workers worldwide. 
-Whether you are looking for freelance projects, part-time remote jobs, or full-time international telework, 
-our platform provides a safe and reliable way to join global teams.</p>
-
-<p>We specialize in connecting talent with projects in web development, mobile app development, graphic design, 
-digital marketing, SEO optimization, content writing, translation, data entry, customer support, and UI/UX design. 
-Our mission is to make remote work accessible and efficient for everyone.</p>
-
-<p>Employers can post verified remote projects, manage registrations, and receive payments securely. 
-Remote workers can register, choose projects that match their skills, and work with global companies from the comfort of their home. 
-All payments are manual and tracked to ensure transparency.</p>
-
-<p>Join Global Telework today and start your journey in the world of remote work. 
-Experience the freedom of working from home, connect with international clients, and grow your career in a safe, secure, and verified environment.</p>
-</section>
-
-<!-- USER FORM -->
-<section>
-<h2>User Registration</h2>
-<form id="userForm">
-<label>Role</label>
+<form id="reg-form">
+<label>Role:</label>
 <select id="role" required>
-<option value="">Select</option>
-<option value="Employer">Employer (1 USDT)</option>
-<option value="Worker">Worker (2 USDT)</option>
+  <option value="">-- Select Role --</option>
+  <option value="employer">Employer (1 USDT)</option>
+  <option value="worker">Worker (2 USDT)</option>
 </select>
 
-<label>Project (Employers only)</label>
+<label>Project (for Employers):</label>
 <select id="project">
-<option value="">N/A</option>
-<option>Website</option>
-<option>Mobile App</option>
-<option>Design</option>
-<option>Marketing</option>
-<option>SEO</option>
+  <option value="">-- Select Project --</option>
+  <option value="website">Website Development</option>
+  <option value="mobileapp">Mobile App</option>
+  <option value="graphic">Graphic Design</option>
+  <option value="marketing">Digital Marketing</option>
+  <option value="seo">SEO Optimization</option>
+  <option value="content">Content Writing</option>
+  <option value="translation">Translation</option>
+  <option value="dataentry">Data Entry</option>
+  <option value="customer">Customer Support</option>
+  <option value="uiux">UI/UX Design</option>
 </select>
 
-<label>Username</label>
-<input id="username" required>
+<label>Username:</label>
+<input type="text" id="username" required>
 
-<label>TXID (Transaction Hash)</label>
-<input id="txid" placeholder="Paste TXID after payment" required>
+<label>Skills:</label>
+<input type="text" id="skills" required>
 
-<p>Send USDT (TRC20) to:</p>
-<div class="wallet">TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq</div>
+<label>Country:</label>
+<select id="country" required>
+  <option value="">-- Select Country --</option>
+  <option value="us">United States</option>
+  <option value="ir">Iran</option>
+  <option value="fr">France</option>
+  <option value="es">Spain</option>
+  <option value="ru">Russia</option>
+  <option value="cn">China</option>
+  <option value="ae">UAE</option>
+  <option value="in">India</option>
+  <option value="jp">Japan</option>
+  <option value="de">Germany</option>
+</select>
 
-<button type="submit">I Paid</button>
+<label>Language:</label>
+<select id="language" required>
+  <option value="">-- Select Language --</option>
+  <option value="en">English</option>
+  <option value="fa">Persian (Farsi)</option>
+  <option value="ar">Arabic</option>
+  <option value="es">Spanish</option>
+  <option value="fr">French</option>
+  <option value="ru">Russian</option>
+  <option value="zh">Chinese</option>
+</select>
+
+<p id="payment-info">Payment Amount: 0 USDT</p>
+<p>Send USDT TRC20 to: <strong>TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq</strong></p>
+
+<button type="submit">Register</button>
 </form>
-</section>
 
-<!-- ADMIN PANEL -->
-<section class="hidden" id="adminSection">
-<h2>Admin Panel</h2>
-<table>
-<thead>
-<tr>
-<th>User</th><th>Role</th><th>Project</th><th>Amount</th><th>TXID</th><th>Status</th><th>Action</th>
-</tr>
-</thead>
-<tbody id="adminTable"></tbody>
-</table>
-<button onclick="downloadCSV()">Download CSV</button>
-</section>
+<div id="confirm-payment" class="hidden">
+<p>After sending the payment, click the button below to confirm your payment.</p>
+<button id="confirm-btn">Confirm Payment</button>
+</div>
+
+<div id="success-message" class="hidden">
+<p>✅ Payment confirmed! Thank you for registering.</p>
+</div>
 
 </main>
 
-<script>
-// Password for admin panel
-const adminPassword = "admin123"; // تغییر دهید
-const adminSection = document.getElementById("adminSection");
+<footer>
+<p>Note: Private chats are not allowed; numbers and emails are automatically removed by our bot.</p>
+</footer>
 
-window.addEventListener("load", ()=>{
-  let pass = prompt("Enter admin password (or cancel to skip)");
-  if(pass===adminPassword) adminSection.classList.remove("hidden");
+<script>
+const roleSelect = document.getElementById('role');
+const paymentInfo = document.getElementById('payment-info');
+const projectSelect = document.getElementById('project');
+const regForm = document.getElementById('reg-form');
+const confirmPayment = document.getElementById('confirm-payment');
+const confirmBtn = document.getElementById('confirm-btn');
+const successMessage = document.getElementById('success-message');
+
+roleSelect.addEventListener('change', () => {
+  const role = roleSelect.value;
+  if(role === 'employer') {
+    paymentInfo.textContent = "Payment Amount: 1 USDT";
+    projectSelect.required = true;
+  } else if(role === 'worker') {
+    paymentInfo.textContent = "Payment Amount: 2 USDT";
+    projectSelect.required = false;
+  } else {
+    paymentInfo.textContent = "Payment Amount: 0 USDT";
+    projectSelect.required = false;
+  }
 });
 
-// LocalStorage for payments
-let payments = JSON.parse(localStorage.getItem("payments") || "[]");
-function save(){ localStorage.setItem("payments", JSON.stringify(payments)); render(); }
-function render(){
-  const table = document.getElementById("adminTable");
-  table.innerHTML="";
-  payments.forEach((p,i)=>{
-    table.innerHTML += `<tr>
-      <td>${p.username}</td>
-      <td>${p.role}</td>
-      <td>${p.project}</td>
-      <td>${p.amount}</td>
-      <td>${p.txid}</td>
-      <td class="status ${p.status}">${p.status}</td>
-      <td>
-        <button onclick="verify(${i})">✔</button>
-        <button onclick="reject(${i})">✖</button>
-      </td>
-    </tr>`;
-  });
-}
-
-// User form
-document.getElementById("userForm").onsubmit=e=>{
+regForm.addEventListener('submit', function(e){
   e.preventDefault();
-  if(!txid.value.trim() || txid.value.trim().length<20){
-    alert("Enter valid TXID"); return;
-  }
-  payments.push({
-    username:username.value,
-    role:role.value,
-    project:project.value||"N/A",
-    amount:role.value==="Employer"?1:2,
-    txid:txid.value.trim(),
-    status:"pending"
-  });
-  save();
-  e.target.reset();
-  alert("Payment submitted. Await admin verification.");
-};
+  const role = roleSelect.value;
+  const project = projectSelect.value;
+  const username = document.getElementById('username').value;
+  const skills = document.getElementById('skills').value;
+  const country = document.getElementById('country').value;
+  const language = document.getElementById('language').value;
 
-function verify(i){ payments[i].status="verified"; save(); }
-function reject(i){ payments[i].status="rejected"; save(); }
+  alert(`New Registration:
+Role: ${role}
+Project: ${project || 'N/A'}
+Username: ${username}
+Skills: ${skills}
+Country: ${country}
+Language: ${language}
+Payment: ${role==='employer'?1:2} USDT
+Please verify payment manually.`);
 
-function downloadCSV(){
-  if(payments.length===0){alert("No payments");return;}
-  let csv="Username,Role,Project,Amount,TXID,Status\n";
-  payments.forEach(p=>{csv+=`${p.username},${p.role},${p.project},${p.amount},${p.txid},${p.status}\n`;});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
-  a.download="payments.csv"; a.click();
-}
+  confirmPayment.classList.remove('hidden');
+});
 
-// Role change for project requirement
-role.onchange=()=>{ project.required=role.value==="Employer"; }
+confirmBtn.addEventListener('click', () => {
+  successMessage.classList.remove('hidden');
+  confirmPayment.classList.add('hidden');
+});
 </script>
 
 </body>
