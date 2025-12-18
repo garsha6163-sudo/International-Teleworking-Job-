@@ -4,171 +4,110 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Telework Registration</title>
+
 <style>
-body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
-header { background:#4CAF50; color:#fff; padding:20px; text-align:center; }
-main { padding:20px; display:flex; flex-direction:column; align-items:center; }
-form { background:white; padding:25px; border-radius:12px; box-shadow:0 0 15px rgba(0,0,0,0.15); width:100%; max-width:500px; }
-label { display:block; margin:12px 0 5px; font-weight: bold; }
-input, select, button { padding:10px; width:100%; margin-bottom:12px; border-radius:6px; border:1px solid #ccc; transition: border 0.3s; }
-input:focus, select:focus { border-color:#4CAF50; outline:none; }
-button { background:#4CAF50; color:white; border:none; cursor:pointer; font-size:16px; transition: background 0.3s; }
-button:hover { background:#45a049; }
-footer { text-align:center; padding:20px; background:#333; color:white; margin-top:25px; }
-.hidden { display:none; }
-#success-msg { color: green; font-weight: bold; margin-top: 15px; }
-.error { border: 2px solid red; }
-.tooltip { font-size:12px; color:#555; margin-top:-8px; margin-bottom:8px; }
-.payment-link { background:#f5f5f5; padding:10px; border-radius:6px; margin-top:10px; }
+body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0}
+header{background:#4CAF50;color:#fff;padding:20px;text-align:center}
+main{padding:20px;display:flex;justify-content:center}
+form{background:#fff;padding:25px;border-radius:12px;max-width:480px;width:100%;box-shadow:0 0 15px rgba(0,0,0,.15)}
+label{margin-top:12px;display:block;font-weight:bold}
+input,select,button{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
+button{background:#4CAF50;color:#fff;border:none;margin-top:15px;font-size:16px;cursor:pointer}
+button:hover{background:#45a049}
+.box{background:#f1f1f1;padding:12px;border-radius:6px;margin-top:15px}
+.hidden{display:none}
+.success{color:green;font-weight:bold;margin-top:10px}
+.note{font-size:13px;color:#555;margin-top:6px}
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-emailjs.init("YOUR_PUBLIC_KEY"); // جایگزین با Public Key EmailJS
+emailjs.init("YOUR_PUBLIC_KEY");
 </script>
 </head>
+
 <body>
 
 <header>
 <h1>Global Telework Registration</h1>
-<p>Register, make payment, and join our Telegram group</p>
+<p>Manual USDT Payment (TRC20)</p>
 </header>
 
 <main>
-<form id="reg-form" novalidate>
-<label>Role: <span class="tooltip">(Select your role)</span></label>
+<form id="form">
+
+<label>Role</label>
 <select id="role" required>
-  <option value="">-- Select Role --</option>
-  <option value="employer">Employer (1 USDT)</option>
-  <option value="worker">Worker (2 USDT)</option>
+  <option value="">Select Role</option>
+  <option value="Employer">Employer (1 USDT)</option>
+  <option value="Worker">Worker (2 USDT)</option>
 </select>
 
-<label>Project (for Employers): <span class="tooltip">(Required if Employer)</span></label>
-<select id="project">
-  <option value="">-- Select Project --</option>
-  <option value="website">Website Development</option>
-  <option value="mobileapp">Mobile App</option>
-  <option value="graphic">Graphic Design</option>
-  <option value="marketing">Digital Marketing</option>
-  <option value="seo">SEO Optimization</option>
-  <option value="content">Content Writing</option>
-  <option value="translation">Translation</option>
-  <option value="dataentry">Data Entry</option>
-  <option value="customer">Customer Support</option>
-  <option value="uiux">UI/UX Design</option>
-</select>
+<label>Username</label>
+<input id="username" placeholder="Enter your username" required>
 
-<label>Username: <span class="tooltip">(Your public username)</span></label>
-<input type="text" id="username" required>
+<label>Skills</label>
+<input id="skills" placeholder="e.g. Web, Design, Marketing" required>
 
-<label>Skills: <span class="tooltip">(Separate with commas)</span></label>
-<input type="text" id="skills" required>
+<label>Country</label>
+<input id="country" placeholder="Your country" required>
 
-<label>Country:</label>
-<select id="country" required>
-  <option value="">-- Select Country --</option>
-  <option value="us">United States</option>
-  <option value="ir">Iran</option>
-  <option value="fr">France</option>
-  <option value="es">Spain</option>
-  <option value="ru">Russia</option>
-  <option value="cn">China</option>
-  <option value="ae">UAE</option>
-  <option value="in">India</option>
-  <option value="jp">Japan</option>
-  <option value="de">Germany</option>
-</select>
+<label>Language</label>
+<input id="language" placeholder="Preferred language" required>
 
-<label>Language:</label>
-<select id="language" required>
-  <option value="">-- Select Language --</option>
-  <option value="en">English</option>
-  <option value="fa">Persian (Farsi)</option>
-  <option value="ar">Arabic</option>
-  <option value="es">Spanish</option>
-  <option value="fr">French</option>
-  <option value="ru">Russian</option>
-  <option value="zh">Chinese</option>
-</select>
+<div class="box hidden" id="paymentBox">
+<p><b>Payment Amount:</b> <span id="amount"></span> USDT</p>
+<p><b>Network:</b> TRC20</p>
+<p><b>Wallet Address:</b></p>
+<p style="word-break:break-all"><b>YOUR_USDT_WALLET_ADDRESS</b></p>
+<p class="note">
+After sending the payment, please wait for manual verification.<br>
+Do NOT send from exchanges that do not support TRC20.
+</p>
+</div>
 
-<p id="payment-info">Payment Amount: 0 USDT</p>
-<div class="payment-link hidden" id="payment-link"></div>
+<button type="submit">Submit Registration</button>
 
-<button type="submit">Register</button>
-<p id="success-msg" class="hidden">✅ Registration email sent! Click the button below after payment.</p>
-
-<button id="simulate-pay" class="hidden">✅ Simulate Payment Done</button>
+<p class="success hidden" id="success">
+✔ Registration received<br>
+✔ Payment instructions displayed<br>
+✔ Please send USDT and wait for confirmation
+</p>
 
 </form>
-
-<div id="after-confirm" class="hidden">
-<a href="https://t.me/GlobalTeleworkOfficial" target="_blank">Join Telegram Group</a>
-</div>
 </main>
 
-<footer>
-<p>Note: Private chats are not allowed; numbers and emails are automatically removed by our bot.</p>
-</footer>
-
 <script>
-const roleSelect = document.getElementById('role');
-const paymentInfo = document.getElementById('payment-info');
-const projectSelect = document.getElementById('project');
-const regForm = document.getElementById('reg-form');
-const afterConfirm = document.getElementById('after-confirm');
-const successMsg = document.getElementById('success-msg');
-const paymentLinkDiv = document.getElementById('payment-link');
-const simulatePayBtn = document.getElementById('simulate-pay');
+const role = document.getElementById("role");
+const box = document.getElementById("paymentBox");
+const amount = document.getElementById("amount");
+const success = document.getElementById("success");
 
-function updatePayment() {
-  const role = roleSelect.value;
-  if(role === 'employer') { paymentInfo.textContent = "Payment Amount: 1 USDT"; projectSelect.required = true; }
-  else if(role === 'worker') { paymentInfo.textContent = "Payment Amount: 2 USDT"; projectSelect.required = false; }
-  else { paymentInfo.textContent = "Payment Amount: 0 USDT"; projectSelect.required = false; }
-  paymentLinkDiv.classList.add('hidden');
-}
-
-roleSelect.addEventListener('change', updatePayment);
-
-function validateForm() {
-  let valid = true;
-  const requiredFields = ['role','username','skills','country','language'];
-  requiredFields.forEach(id => {
-    const el = document.getElementById(id);
-    if(!el.value){ el.classList.add('error'); valid=false; } else { el.classList.remove('error'); }
-  });
-  if(roleSelect.value==='employer' && !projectSelect.value){ projectSelect.classList.add('error'); valid=false; }
-  else{ projectSelect.classList.remove('error'); }
-  return valid;
-}
-
-regForm.addEventListener('submit', function(e){
-  e.preventDefault();
-  if(!validateForm()) return;
-
-  const role = roleSelect.value;
-  const project = projectSelect.value || 'N/A';
-  const username = document.getElementById('username').value;
-  const skills = document.getElementById('skills').value;
-  const country = document.getElementById('country').value;
-  const language = document.getElementById('language').value;
-  const payment = role==='employer'?1:2;
-
-  // ارسال ایمیل EmailJS
-  const templateParams = { role, project, username, skills, country, language, payment };
-  emailjs.send('YOUR_SERVICE_ID','YOUR_TEMPLATE_ID',templateParams)
-    .then(()=>{ successMsg.classList.remove('hidden'); simulatePayBtn.classList.remove('hidden'); })
-    .catch(err=>{ alert('Email send failed'); console.error(err); });
-
-  // شبیه‌سازی لینک پرداخت NOWPayments
-  paymentLinkDiv.innerHTML = `<a href="#" onclick="alert('Redirect to NOWPayments');">Click here to pay ${payment} USDT</a>`;
-  paymentLinkDiv.classList.remove('hidden');
+role.addEventListener("change", ()=>{
+  if(!role.value) return;
+  box.classList.remove("hidden");
+  amount.textContent = role.value === "Employer" ? 1 : 2;
 });
 
-// شبیه‌سازی پرداخت واقعی
-simulatePayBtn.addEventListener('click', ()=>{
-  afterConfirm.classList.remove('hidden');
-  simulatePayBtn.classList.add('hidden');
-  alert('Payment simulated as done! Telegram link activated.');
+document.getElementById("form").addEventListener("submit", e=>{
+  e.preventDefault();
+
+  const data = {
+    role: role.value,
+    username: username.value,
+    skills: skills.value,
+    country: country.value,
+    language: language.value,
+    amount: role.value === "Employer" ? 1 : 2
+  };
+
+  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", data)
+    .then(()=>{
+      success.classList.remove("hidden");
+      e.target.reset();
+      box.classList.add("hidden");
+    })
+    .catch(()=> alert("Email sending failed"));
 });
 </script>
 
