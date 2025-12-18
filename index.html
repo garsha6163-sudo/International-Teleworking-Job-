@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,59 +5,102 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Telework Registration</title>
 <style>
-body { font-family: Arial,sans-serif; margin:0; padding:0; background:#f5f5f5; }
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
 header { background:#4CAF50; color:#fff; padding:20px; text-align:center; }
-main { padding:20px; text-align:center; }
-form { display:inline-block; text-align:left; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); max-width:400px; }
-label { display:block; margin:10px 0 5px; }
-input, select, button { padding:8px; width:100%; margin-bottom:10px; }
-button { background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer; }
-footer { text-align:center; padding:20px; background:#333; color:white; margin-top:20px; }
+main { padding:20px; display:flex; flex-direction:column; align-items:center; }
+form { background:white; padding:25px; border-radius:12px; box-shadow:0 0 15px rgba(0,0,0,0.15); width:100%; max-width:500px; }
+label { display:block; margin:12px 0 5px; font-weight: bold; }
+input, select, button { padding:10px; width:100%; margin-bottom:12px; border-radius:6px; border:1px solid #ccc; transition: border 0.3s; }
+input:focus, select:focus { border-color:#4CAF50; outline:none; }
+button { background:#4CAF50; color:white; border:none; cursor:pointer; font-size:16px; transition: background 0.3s; }
+button:hover { background:#45a049; }
+footer { text-align:center; padding:20px; background:#333; color:white; margin-top:25px; }
 .hidden { display:none; }
+#success-msg { color: green; font-weight: bold; margin-top: 15px; }
+.error { border: 2px solid red; }
+.tooltip { font-size:12px; color:#555; margin-top:-8px; margin-bottom:8px; }
+@media(max-width:600px){
+  form { padding:20px; width:90%; }
+  button { font-size:14px; }
+}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+emailjs.init("YOUR_PUBLIC_KEY"); // جایگزین با Public Key خودت
+</script>
 </head>
 <body>
 
 <header>
 <h1>Global Telework Registration</h1>
-<p>Register, make payment, and wait for confirmation before accessing Telegram group</p>
+<p>Register, make payment, and join our Telegram group</p>
 </header>
 
 <main>
-<p>Select your role and project (if employer), then register. Payment must be verified before joining Telegram.</p>
-
-<form id="reg-form">
-<label>Role:</label>
+<form id="reg-form" novalidate>
+<label>Role: <span class="tooltip">(Select your role)</span></label>
 <select id="role" required>
   <option value="">-- Select Role --</option>
   <option value="employer">Employer (1 USDT)</option>
   <option value="worker">Worker (2 USDT)</option>
 </select>
 
-<label>Project (for Employers):</label>
+<label>Project (for Employers): <span class="tooltip">(Required if Employer)</span></label>
 <select id="project">
   <option value="">-- Select Project --</option>
   <option value="website">Website Development</option>
   <option value="mobileapp">Mobile App</option>
   <option value="graphic">Graphic Design</option>
+  <option value="marketing">Digital Marketing</option>
+  <option value="seo">SEO Optimization</option>
+  <option value="content">Content Writing</option>
+  <option value="translation">Translation</option>
+  <option value="dataentry">Data Entry</option>
+  <option value="customer">Customer Support</option>
+  <option value="uiux">UI/UX Design</option>
 </select>
 
-<label>Username:</label>
+<label>Username: <span class="tooltip">(Your public username)</span></label>
 <input type="text" id="username" required>
 
-<label>Skills:</label>
+<label>Skills: <span class="tooltip">(Separate with commas)</span></label>
 <input type="text" id="skills" required>
 
 <label>Country:</label>
-<input type="text" id="country">
+<select id="country" required>
+  <option value="">-- Select Country --</option>
+  <option value="us">United States</option>
+  <option value="ir">Iran</option>
+  <option value="fr">France</option>
+  <option value="es">Spain</option>
+  <option value="ru">Russia</option>
+  <option value="cn">China</option>
+  <option value="ae">UAE</option>
+  <option value="in">India</option>
+  <option value="jp">Japan</option>
+  <option value="de">Germany</option>
+</select>
+
+<label>Language:</label>
+<select id="language" required>
+  <option value="">-- Select Language --</option>
+  <option value="en">English</option>
+  <option value="fa">Persian (Farsi)</option>
+  <option value="ar">Arabic</option>
+  <option value="es">Spanish</option>
+  <option value="fr">French</option>
+  <option value="ru">Russian</option>
+  <option value="zh">Chinese</option>
+</select>
 
 <p id="payment-info">Payment Amount: 0 USDT</p>
+<p>Send USDT TRC20 to: <strong>TUWa99kY7KUYJbh1GWdJWa6n597yDkM8Aq</strong></p>
 
 <button type="submit">Register</button>
+<p id="success-msg" class="hidden">✅ Registration email sent! You can now join the Telegram group below.</p>
 </form>
 
 <div id="after-confirm" class="hidden">
-<p>Payment verified! Click the link below to join our Telegram group:</p>
 <a href="https://t.me/GlobalTeleworkOfficial" target="_blank">Join Telegram Group</a>
 </div>
 </main>
@@ -73,8 +115,9 @@ const paymentInfo = document.getElementById('payment-info');
 const projectSelect = document.getElementById('project');
 const regForm = document.getElementById('reg-form');
 const afterConfirm = document.getElementById('after-confirm');
+const successMsg = document.getElementById('success-msg');
 
-roleSelect.addEventListener('change', () => {
+function updatePayment() {
   const role = roleSelect.value;
   if(role === 'employer') {
     paymentInfo.textContent = "Payment Amount: 1 USDT";
@@ -86,28 +129,59 @@ roleSelect.addEventListener('change', () => {
     paymentInfo.textContent = "Payment Amount: 0 USDT";
     projectSelect.required = false;
   }
-});
+}
+
+roleSelect.addEventListener('change', updatePayment);
+
+// اعتبارسنجی فرم
+function validateForm() {
+  let valid = true;
+  const requiredFields = ['role','username','skills','country','language'];
+  requiredFields.forEach(id => {
+    const el = document.getElementById(id);
+    if(!el.value){
+      el.classList.add('error');
+      valid = false;
+    } else {
+      el.classList.remove('error');
+    }
+  });
+
+  if(roleSelect.value === 'employer' && !projectSelect.value){
+    projectSelect.classList.add('error');
+    valid = false;
+  } else {
+    projectSelect.classList.remove('error');
+  }
+
+  return valid;
+}
 
 regForm.addEventListener('submit', function(e){
   e.preventDefault();
+  if(!validateForm()) return;
+
   const role = roleSelect.value;
   const project = projectSelect.value;
   const username = document.getElementById('username').value;
   const skills = document.getElementById('skills').value;
   const country = document.getElementById('country').value;
+  const language = document.getElementById('language').value;
+  const payment = role === 'employer' ? 1 : 2;
 
-  // ارسال اطلاعات به ایمیل شما (نمونه با alert)
-  alert(`New Registration:
-Role: ${role}
-Project: ${project || 'N/A'}
-Username: ${username}
-Skills: ${skills}
-Country: ${country}
-Payment: ${role==='employer'?1:2} USDT
-Please verify payment manually.`);
+  const templateParams = { role, project: project || 'N/A', username, skills, country, language, payment };
 
-  // بعد از تایید دستی، لینک گروه فعال می‌شود
-  afterConfirm.classList.remove('hidden');
+  emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+    .then(function(response) {
+       successMsg.classList.remove('hidden');
+       afterConfirm.classList.remove('hidden');
+       regForm.reset();
+       paymentInfo.textContent = "Payment Amount: 0 USDT";
+       document.querySelectorAll('input, select').forEach(el => el.classList.remove('error'));
+    }, function(error) {
+       alert('Failed to send email. Please try again.');
+       console.log('FAILED...', error);
+    });
 });
 </script>
 
