@@ -6,27 +6,25 @@
 <title>Global Telework Registration</title>
 <style>
 body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
-header { background:#4CAF50; color:#fff; padding:20px; text-align:center; }
-main { padding:20px; text-align:center; }
-form { display:inline-block; text-align:left; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); max-width:500px; width:90%; }
-label { display:block; margin:10px 0 5px; }
-input, select, button { padding:8px; width:100%; margin-bottom:10px; }
+header { background:#4CAF50; color:#fff; padding:15px; text-align:center; }
+main { padding:15px; text-align:center; }
+form { display:block; text-align:left; background:white; padding:15px; border-radius:8px; box-shadow:0 0 8px rgba(0,0,0,0.1); max-width:400px; width:90%; margin:auto; }
+label { display:block; margin:8px 0 4px; font-size:14px; }
+input, select, button { padding:8px; width:100%; margin-bottom:8px; font-size:14px; }
 button { background:#4CAF50; color:white; border:none; border-radius:5px; cursor:pointer; }
-footer { text-align:center; padding:20px; background:#333; color:white; margin-top:20px; }
+footer { text-align:center; padding:15px; background:#333; color:white; margin-top:15px; font-size:13px; }
 .hidden { display:none; }
-.copy-btn { background:#2196F3; margin-top:10px; }
+.copy-btn { background:#2196F3; margin-top:8px; }
 </style>
 </head>
 <body>
 
 <header>
-<h1>Global Telework Registration</h1>
-<p>Register, make payment, and verify manually</p>
+<h1>Global Telework</h1>
+<p>Register, pay manually & join Telegram</p>
 </header>
 
 <main>
-<p>Fill in your information and send USDT payment. Then confirm below.</p>
-
 <form id="reg-form">
 <label>Role:</label>
 <select id="role" required>
@@ -90,14 +88,14 @@ footer { text-align:center; padding:20px; background:#333; color:white; margin-t
 </form>
 
 <div id="confirm-payment" class="hidden">
-<p>After sending the payment, click the button below to confirm your payment.</p>
+<p>After sending payment, click below to confirm.</p>
 <button id="confirm-btn">Confirm Payment</button>
 </div>
 
 <div id="success-message" class="hidden">
 <p>✅ Payment confirmed! Thank you for registering.</p>
 <p>📌 Telegram group link:</p>
-<input type="text" id="tg-link" value="t.me/GlobalTeleworkOfficial" readonly style="width:100%; padding:8px;">
+<input type="text" id="tg-link" value="t.me/GlobalTeleworkOfficial" readonly style="width:100%; padding:8px; font-size:14px;">
 <button class="copy-btn" id="copy-btn">Copy Link</button>
 <p>Paste this link in your Telegram app to join the group.</p>
 </div>
@@ -105,7 +103,7 @@ footer { text-align:center; padding:20px; background:#333; color:white; margin-t
 </main>
 
 <footer>
-<p>Note: Private chats are not allowed; numbers and emails are automatically removed by our bot.</p>
+<p>Private chats are not allowed; numbers/emails removed automatically.</p>
 </footer>
 
 <script>
@@ -143,7 +141,6 @@ confirmBtn.addEventListener('click', () => {
   confirmPayment.classList.add('hidden');
 });
 
-// Copy link to clipboard
 copyBtn.addEventListener('click', () => {
   tgLink.select();
   tgLink.setSelectionRange(0, 99999);
