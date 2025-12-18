@@ -8,21 +8,29 @@
 <style>
 body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0}
 header{background:#4CAF50;color:#fff;padding:20px;text-align:center}
-main{padding:20px;display:flex;justify-content:center}
-form{background:#fff;padding:25px;border-radius:12px;max-width:480px;width:100%;box-shadow:0 0 15px rgba(0,0,0,.15)}
+main{padding:20px;display:flex;flex-direction:column;align-items:center}
+form{background:#fff;padding:25px;border-radius:12px;max-width:500px;width:100%;box-shadow:0 0 15px rgba(0,0,0,.15)}
 label{margin-top:12px;display:block;font-weight:bold}
 input,select,button{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
 button{background:#4CAF50;color:#fff;border:none;margin-top:15px;font-size:16px;cursor:pointer}
 button:hover{background:#45a049}
-.box{background:#f1f1f1;padding:12px;border-radius:6px;margin-top:15px}
+.box{background:#f1f1f1;padding:12px;border-radius:6px;margin-top:15px;width:100%}
 .hidden{display:none}
 .success{color:green;font-weight:bold;margin-top:10px}
 .note{font-size:13px;color:#555;margin-top:6px}
+.error{border:2px solid red}
+.wallet{word-break:break-all;font-weight:bold;color:#333;background:#eee;padding:6px;border-radius:4px;margin-top:4px}
+#paidList{background:#fff;padding:15px;border-radius:12px;max-width:500px;width:100%;box-shadow:0 0 10px rgba(0,0,0,.1);margin-top:20px;}
+#paidList h3{margin-top:0;text-align:center;}
+#paidList ul{list-style:none;padding-left:0;}
+#paidList li{padding:6px 0;border-bottom:1px solid #ddd;}
+#downloadCSV{margin-top:10px;background:#007BFF;}
+#downloadCSV:hover{background:#0056b3;}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-emailjs.init("YOUR_PUBLIC_KEY");
+emailjs.init("YOUR_PUBLIC_KEY"); // جایگزین با Public Key EmailJS
 </script>
 </head>
 
@@ -43,6 +51,21 @@ emailjs.init("YOUR_PUBLIC_KEY");
   <option value="Worker">Worker (2 USDT)</option>
 </select>
 
+<label>Project (Only for Employers)</label>
+<select id="project">
+  <option value="">Select Project</option>
+  <option value="website">Website Development</option>
+  <option value="mobileapp">Mobile App</option>
+  <option value="graphic">Graphic Design</option>
+  <option value="marketing">Digital Marketing</option>
+  <option value="seo">SEO Optimization</option>
+  <option value="content">Content Writing</option>
+  <option value="translation">Translation</option>
+  <option value="dataentry">Data Entry</option>
+  <option value="customer">Customer Support</option>
+  <option value="uiux">UI/UX Design</option>
+</select>
+
 <label>Username</label>
 <input id="username" placeholder="Enter your username" required>
 
@@ -59,41 +82,95 @@ emailjs.init("YOUR_PUBLIC_KEY");
 <p><b>Payment Amount:</b> <span id="amount"></span> USDT</p>
 <p><b>Network:</b> TRC20</p>
 <p><b>Wallet Address:</b></p>
-<p style="word-break:break-all"><b>YOUR_USDT_WALLET_ADDRESS</b></p>
+<p class="wallet">TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
 <p class="note">
-After sending the payment, please wait for manual verification.<br>
+After sending the payment, click "I Paid" below to notify admin.<br>
 Do NOT send from exchanges that do not support TRC20.
 </p>
 </div>
 
 <button type="submit">Submit Registration</button>
+<button type="button" id="paidBtn" class="hidden">I Paid</button>
 
 <p class="success hidden" id="success">
 ✔ Registration received<br>
 ✔ Payment instructions displayed<br>
-✔ Please send USDT and wait for confirmation
+✔ Please send USDT and click "I Paid" after payment
+</p>
+
+<p class="success hidden" id="paidSuccess">
+✔ Payment notification sent! Admin will verify manually.
 </p>
 
 </form>
+
+<div id="paidList" class="hidden">
+<h3>Paid Users</h3>
+<ul id="paidUsers"></ul>
+<button id="downloadCSV">Download CSV</button>
+</div>
+
 </main>
 
 <script>
 const role = document.getElementById("role");
+const project = document.getElementById("project");
 const box = document.getElementById("paymentBox");
 const amount = document.getElementById("amount");
 const success = document.getElementById("success");
+const paidBtn = document.getElementById("paidBtn");
+const paidSuccess = document.getElementById("paidSuccess");
+const paidList = document.getElementById("paidList");
+const paidUsers = document.getElementById("paidUsers");
+const downloadCSV = document.getElementById("downloadCSV");
 
 role.addEventListener("change", ()=>{
   if(!role.value) return;
   box.classList.remove("hidden");
   amount.textContent = role.value === "Employer" ? 1 : 2;
+  if(role.value === "Employer") project.required = true;
+  else project.required = false;
+});
+
+function validateForm(){
+  let valid = true;
+  const fields = [role, username, skills, country, language];
+  fields.forEach(f=>{
+    if(!f.value){ f.classList.add("error"); valid=false; }
+    else{ f.classList.remove("error"); }
+  });
+  if(role.value==="Employer" && !project.value){ project.classList.add("error"); valid=false; }
+  else{ project.classList.remove("error"); }
+  return valid;
+}
+
+function addPaidUser(data){
+  paidList.classList.remove("hidden");
+  const li = document.createElement("li");
+  li.textContent = `${data.username} | Role: ${data.role} | Project: ${data.project} | Amount: ${data.amount} USDT`;
+  paidUsers.appendChild(li);
+  // ذخیره در localStorage
+  let paid = JSON.parse(localStorage.getItem("paidUsers") || "[]");
+  paid.push(data);
+  localStorage.setItem("paidUsers", JSON.stringify(paid));
+}
+
+// بارگذاری کاربران پرداخت شده از قبل
+window.addEventListener("load", ()=>{
+  let paid = JSON.parse(localStorage.getItem("paidUsers") || "[]");
+  if(paid.length>0){
+    paidList.classList.remove("hidden");
+    paid.forEach(d=>addPaidUser(d));
+  }
 });
 
 document.getElementById("form").addEventListener("submit", e=>{
   e.preventDefault();
+  if(!validateForm()) return;
 
   const data = {
     role: role.value,
+    project: project.value || "N/A",
     username: username.value,
     skills: skills.value,
     country: country.value,
@@ -101,13 +178,53 @@ document.getElementById("form").addEventListener("submit", e=>{
     amount: role.value === "Employer" ? 1 : 2
   };
 
-  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", data)
+  emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",data)
     .then(()=>{
       success.classList.remove("hidden");
       e.target.reset();
-      box.classList.add("hidden");
+      box.classList.remove("hidden");
+      paidBtn.classList.remove("hidden");
     })
     .catch(()=> alert("Email sending failed"));
+});
+
+paidBtn.addEventListener("click", ()=>{
+  const data = {
+    role: role.value || "N/A",
+    project: project.value || "N/A",
+    username: username.value || "N/A",
+    skills: skills.value || "N/A",
+    country: country.value || "N/A",
+    language: language.value || "N/A",
+    amount: role.value === "Employer" ? 1 : 2
+  };
+
+  emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID", {...data, paid: "User clicked I Paid"})
+    .then(()=>{
+      paidSuccess.classList.remove("hidden");
+      addPaidUser(data);
+      paidBtn.classList.add("hidden");
+    })
+    .catch(()=> alert("Failed to notify admin"));
+});
+
+// دانلود CSV
+downloadCSV.addEventListener("click", ()=>{
+  let paid = JSON.parse(localStorage.getItem("paidUsers") || "[]");
+  if(paid.length === 0) return alert("No paid users yet.");
+
+  let csv = "Username,Role,Project,Skills,Country,Language,Amount\n";
+  paid.forEach(d=>{
+    csv += `"${d.username}","${d.role}","${d.project}","${d.skills}","${d.country}","${d.language}","${d.amount}"\n`;
+  });
+
+  const blob = new Blob([csv], {type: "text/csv"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "paid_users.csv";
+  a.click();
+  URL.revokeObjectURL(url);
 });
 </script>
 
